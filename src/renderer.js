@@ -14,7 +14,4 @@ async function openDialogBox () {
 async function demoProcess () {
 
     console.log("process");
-
-    var getFrags = require('getfrags');
-    const createFiles = require("../main/lib/create-files.js");
 }

@@ -12,10 +12,6 @@
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
-  "author": {
-    "name": "Arad119",
-    "email": "arad.vithaj@gmail.com"
-  },
   "license": "MIT",
   "config": {
     "forge": {

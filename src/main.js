@@ -25,6 +25,7 @@ const createWindow = () => {
       preload: __dirname + "/preload.js",
       nodeIntegration: true,
       enableRemoteModule: true,
+      contextIsolation: true,
     }
   });
 

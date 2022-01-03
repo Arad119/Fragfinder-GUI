@@ -68,3 +68,8 @@ ipcMain.handle("select-folder-popup", async (handler, args) => {
 
     return popupResults;
 });
+
+ipcMain.on("processDemo", (event, data) => {
+  const demoPath = data;
+  window.webContents.send("fullDemoPath", demoPath);
+})

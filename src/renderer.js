@@ -13,5 +13,5 @@ async function openDialogBox () {
 
 async function demoProcess () {
 
-    console.log("process");
+    console.log("Hook into main fragfinder");
 }

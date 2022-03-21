@@ -1,19 +1,8 @@
-async function openDialogBox () {
-    const result = await api.selectFolderPopup(); 
 
-    //console.log(result);
-    if (result.canceled) return;
-
-    const filePathInput = document.getElementById("folder-path");
-
-    if (result.filePaths.length == 1){
-        filePathInput.value = result.filePaths[0];
-
-        //console.log(result.filePaths[0]);
-    }
-}
-
-async function demoProcess () {
-
-    console.log("Hook into main fragfinder");
-}
+document.getElementById('dirs').addEventListener('click', (evt) => {
+    evt.preventDefault()
+    window.postMessage({
+      type: 'select-dirs',
+    })
+  })
+  

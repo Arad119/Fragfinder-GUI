@@ -1,1 +1,0 @@
-{ "skipFiles": ["/node_modules/**/*.js", "<node_internals>/**/*.js"] }

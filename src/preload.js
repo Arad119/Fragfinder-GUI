@@ -1,7 +1,9 @@
-const { ipcRenderer, contextBridge } = require("electron");
+const { ipcRenderer } = require('electron')
 
-contextBridge.exposeInMainWorld("api", {
-
-    selectFolderPopup: () => ipcRenderer.invoke("select-folder-popup", true)
-
-});
+process.once('loaded', () => {
+  window.addEventListener('message', evt => {
+    if (evt.data.type === 'select-dirs') {
+      ipcRenderer.send('select-dirs')
+    }
+  })
+})

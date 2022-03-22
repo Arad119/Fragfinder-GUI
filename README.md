@@ -87,13 +87,15 @@ To get the program up and running follow these simple steps.
 ### Prerequisites
 
 * CSGO Demos Manager
-1. Go to Settings.
-2. Add a Folder where your demos are located from within the Folders tab.
-3. Go back to the homescreen.
-4. Select your folder path from within the list navigation. 
-5. Select the demos you want to analyze.
-6. Right click and select "Export JSON".
-7. Specify the filepath you want to use to save the JSON files.
+```
+Go to Settings.
+Add a Folder where your demos are located from within the Folders tab.
+Go back to the homescreen.
+Select your folder path from within the list navigation. 
+Select the demos you want to analyze.
+Right click and select "Export JSON".
+Specify the filepath you want to use to save the JSON files.
+```
 
 ### Installation
 

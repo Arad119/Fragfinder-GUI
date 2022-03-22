@@ -47,10 +47,10 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">How to use</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#how-to-use">How to use</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -87,15 +87,21 @@ To get the program up and running follow these simple steps.
 ### Prerequisites
 
 * CSGO Demos Manager
-  ```sh
-  Go to Settings.
-  Add a Folder where your demos are located from within the Folders tab.
-  Go back to the homescreen.
-  Select your folder path from within the list navigation. 
-  Select the demos you want to analyze.
-  Right click and select "Export JSON".
-  Specify the filepath you want to use to save the JSON files.
-  ```
+1. Go to Settings.
+2. Add a Folder where your demos are located from within the Folders tab.
+3. Go back to the homescreen.
+4. Select your folder path from within the list navigation. 
+5. Select the demos you want to analyze.
+6. Right click and select "Export JSON".
+7. Specify the filepath you want to use to save the JSON files.
+
+### Installation
+
+1. Download the latest release via [Fragfinder-GUI/releases](https://github.com/Arad119/Fragfinder-GUI/releases).
+2. Run "fragfinder Setup.exe".
+3. The program should start as soon as the program has been installed.
+4. You can find the installation path in "%LocalAppData%\fragfinder\app-1.0.0".
+5. Run "fragfinder.exe".
 
 ### How to use
 
@@ -150,7 +156,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-[@Arad119](https://twitter.com/Arad119) - contact@arad119.com
+Twitter [@Arad119](https://twitter.com/Arad119) - contact@arad119.com
 
 Project Link: [https://github.com/Arad119/Fragfinder-GUI](https://github.com/Arad119/Fragfinder-GUI)
 

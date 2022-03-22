@@ -119,7 +119,7 @@ To get the program up and running follow these simple steps.
 ## Roadmap
 
 - [ ] Add SteamID filtering
-- [ ] Add JSON creatiion to the program 
+- [ ] Add JSON creation to the program 
 - [ ] Better UI
 
 See the [open issues](https://github.com/Arad119/Fragfinder-GUI/issues) for a full list of proposed features (and known issues).

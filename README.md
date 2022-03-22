@@ -156,7 +156,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Twitter [@Arad119](https://twitter.com/Arad119) - contact@arad119.com
+Twitter [@Arad119](https://twitter.com/Arad119) - Email contact@arad119.com
 
 Project Link: [https://github.com/Arad119/Fragfinder-GUI](https://github.com/Arad119/Fragfinder-GUI)
 

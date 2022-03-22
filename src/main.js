@@ -14,8 +14,8 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 let mainWindow;
-let paths = null
 let folderPath
+let matchContent = '';
 
 const createWindow = () => {
   // Create the browser window.
@@ -366,14 +366,23 @@ async function createFiles(data) {
       matchText[0] += `\n\n`;
     }
 
-    await fs.appendFile(
-      "highlights.txt",
-      matchText.join("") + "\n\n\n"
-    );   
+
+    matchContent += matchText.join("") + "\n\n\n";
 
   }
 
 
+  //console.log(matchContent)
+
+  const { filePath, canceled } = await dialog.showSaveDialog({
+    defaultPath: "highlights.txt"
+  });
+
+  if (filePath && !canceled) {
+    fs.writeFile(filePath, matchContent, (err) => {
+      if (err) throw err;
+    });
+  }
 
 
 };
@@ -457,10 +466,26 @@ function getWeaponsUsed(kills) {
 }
 
 async function runFragFinder(folderPath) {
+
+  matchContent = '';
+
   try {
     const highlights = await getFrags(folderPath, "");
     await createFiles(highlights);
     console.log("files created!");
+
+
+    const options = {
+      type: 'none',
+      buttons: [],
+      defaultId: 0,
+      title: 'File creation',
+      message: 'File has been created!',
+    };
+  
+    dialog.showMessageBox(null, options);
+
+
   } catch (e) {
     console.log("something went wrong:", e.message);
   }

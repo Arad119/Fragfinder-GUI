@@ -103,7 +103,7 @@ To get the program up and running follow these simple steps.
 2. Run "fragfinder Setup.exe".
 3. The program should start as soon as the program has been installed.
 4. You can find the installation path in "%LocalAppData%\fragfinder\app-1.0.0".
-5. Run "fragfinder.exe".
+5. Create a shortcut for "fragfinder.exe".
 
 ### How to use
 

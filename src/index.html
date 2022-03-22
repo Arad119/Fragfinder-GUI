@@ -8,14 +8,26 @@
   </head>
   <body>
     <h1>Fragfinder</h1>
-
-    <h3>File Upload in Electron</h3>
     
     <input id='folder-path' type="text" placeholder="Folder Location" readonly>
     <button type="button" id="dirs">Select Folder</button>
 
+    <br>
+    <br>
+    <input id='steamId' type="text" placeholder="SteamID">
+
     <button id='process-demos' onclick="demoProcess()">Process Demos</button></p>
 
+    
+
+    <input type="checkbox" id="steamIdCheck" name="steamIdCheck">
+    <label for="steamIdCheck">Get all available highlights</label>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <script src="./renderer.js" defer></script>
 

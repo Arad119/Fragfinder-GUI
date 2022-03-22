@@ -22,7 +22,7 @@
 <h3 align="center">Fragfinder-GUI</h3>
 
   <p align="center">
-    Built upon [henb13/frag-finder](https://github.com/HenB13/frag-finder) with an added GUI, generate highlight timestamps and filter out specific player highlights. More to come!
+    Built upon <a href="https://github.com/HenB13/frag-finder">henb13/frag-finder</a> with an added GUI, generate highlight timestamps and filter out specific player highlights. More to come!
     <br />
     <br />
     <a href="https://github.com/Arad119/Fragfinder-GUI/issues">Report Bug</a>

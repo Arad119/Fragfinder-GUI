@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, globalShortcut  } = require('electron');
 const electron = require('electron');
 const path = require('path');
 
@@ -14,6 +14,8 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 let mainWindow;
+let paths = null
+let folderPath
 
 const createWindow = () => {
   // Create the browser window.
@@ -34,7 +36,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -49,6 +51,16 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+app.on('ready', () => {
+  // Register a shortcut listener for Ctrl + Shift + I
+  globalShortcut.register('Control+Shift+I', () => {
+      // When the user presses Ctrl + Shift + I, this function will get called
+      // You can modify this function to do other things, but if you just want
+      // to disable the shortcut, you can just return false
+      return false;
+  });
 });
 
 app.on('activate', () => {
@@ -69,7 +81,7 @@ ipcMain.on('select-dirs', async (event, arg) => {
   })
 
 
-  const fs = require("fs").promises;
+const fs = require("fs").promises;
 const path = require("path");
 const CSGO_ROUND_LENGTH = 115;
 
@@ -228,10 +240,14 @@ const camelizeIsh = function (text) {
   return text;
 };
 
+
+
+
+
+
 async function createFiles(data) {
-  await fs.writeFile("./exports/highlights.txt", "\n");
   for (const match of data) {
-    const matchText = [`**playdemo ${match.demoName}`];
+    const matchText = [`**playdemo ${match.demoName}.dem`];
     const matchFragFormat = [];
     let fragsFound = false;
 
@@ -351,10 +367,15 @@ async function createFiles(data) {
     }
 
     await fs.appendFile(
-      "./exports/highlights.txt",
+      "highlights.txt",
       matchText.join("") + "\n\n\n"
-    );
+    );   
+
   }
+
+
+
+
 };
 
 function getWeaponsUsed(kills) {
@@ -437,7 +458,7 @@ function getWeaponsUsed(kills) {
 
 async function runFragFinder(folderPath) {
   try {
-    const highlights = await getFrags(folderPath);
+    const highlights = await getFrags(folderPath, "");
     await createFiles(highlights);
     console.log("files created!");
   } catch (e) {
@@ -445,7 +466,8 @@ async function runFragFinder(folderPath) {
   }
 }
 
-const folderPath = result.filePaths[0];
+folderPath = result.filePaths[0]
+
 
 runFragFinder(folderPath);
 

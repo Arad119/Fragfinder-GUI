@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer } = require('electron')
 
 process.once('loaded', () => {
   window.addEventListener('message', evt => {
@@ -6,4 +6,8 @@ process.once('loaded', () => {
       ipcRenderer.send('select-dirs')
     }
   })
+})
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  filePathInput: (callback) => ipcRenderer.on('updatefileLoc', callback)
 })

@@ -5,3 +5,8 @@ document.getElementById('dirs').addEventListener('click', (evt) => {
       type: 'select-dirs',
     })
   })
+
+
+window.electronAPI.filePathInput((event, value) => {
+  $('#folder-path').val(value);
+})

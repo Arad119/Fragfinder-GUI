@@ -10,3 +10,11 @@ document.getElementById('dirs').addEventListener('click', (evt) => {
 window.electronAPI.filePathInput((event, value) => {
   $('#folder-path').val(value);
 })
+
+
+const setButton = $('#btn')[0];
+
+setButton.addEventListener('click', () => {
+    const steamid = $('#steamid').val();
+    window.electronAPI.processDemos(steamid)
+});

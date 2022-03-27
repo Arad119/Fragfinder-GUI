@@ -14,3 +14,7 @@ body {
   align-items: center;
   color: white;
 }
+
+.longer {
+  width: 40%;
+}

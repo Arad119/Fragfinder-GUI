@@ -9,5 +9,6 @@ process.once('loaded', () => {
 })
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  filePathInput: (callback) => ipcRenderer.on('updatefileLoc', callback)
+  filePathInput: (callback) => ipcRenderer.on('updatefileLoc', callback),
+  processDemos: (steamid) => ipcRenderer.send('setSteamId', steamid)
 })

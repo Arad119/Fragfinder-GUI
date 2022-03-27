@@ -17,11 +17,11 @@ let mainWindow;
 let folderPath;
 let matchContent = '';
 
+
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
-    icon: __dirname + '/images/logo.png',
     width: 1000,
     height: 600,
     webPreferences: {

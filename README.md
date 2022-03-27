@@ -15,9 +15,12 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-
-
-
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/Arad119/Fragfinder-GUI">
+    <img src="images/logo.jpg" alt="Logo" width="80" height="80">
+  </a>
 
 <h3 align="center">Fragfinder-GUI</h3>
 

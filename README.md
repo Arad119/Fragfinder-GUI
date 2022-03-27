@@ -19,7 +19,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Arad119/Fragfinder-GUI">
-    <img src="images/logo.jpg" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Fragfinder-GUI</h3>
@@ -105,14 +105,16 @@ To get the program up and running follow these simple steps.
 1. Download the latest release via [Fragfinder-GUI/releases](https://github.com/Arad119/Fragfinder-GUI/releases).
 2. Run "fragfinder Setup.exe".
 3. The program should start as soon as the program has been installed.
-4. You can find the installation path in "%LocalAppData%\fragfinder\app-1.0.0".
+4. You can find the installation path in "%LocalAppData%\fragfinder\app-1.0.1".
 5. Create a shortcut for "fragfinder.exe".
 
 ### How to use
 
 1. Select the folder which your JSON files are located.
-2. Let the program process all of the files, length can vary depending on how many demos there are.
-3. Specify the filepath where the highlights.txt file should get saved.
+2. Optional: Specify a STEAMID64 to only export their highlights - If no STEAMID64 is specified, all highlights will be exported.
+3. Process Demos and then specify a filepath for where the filepath where the highlights.txt file should get saved.
+4. Let the program process all of the json files, length can vary depending on how many demos there are.
+5. Find your highlights.txt file at you decided to save it.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -121,7 +123,7 @@ To get the program up and running follow these simple steps.
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Add SteamID filtering
+- [x] Add SteamID filtering
 - [ ] Add JSON creation to the program 
 - [ ] Better UI
 

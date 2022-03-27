@@ -80,6 +80,7 @@ ipcMain.on('select-dirs', async (event, arg) => {
     properties: ['openDirectory']
   })
 
+  folderPath = result.filePaths[0];
 
 const fs = require("fs").promises;
 const path = require("path");
@@ -491,11 +492,9 @@ async function runFragFinder(folderPath) {
   }
 }
 
-folderPath = result.filePaths[0]
-
+mainWindow.webContents.send('updatefileLoc', folderPath);
 
 runFragFinder(folderPath);
-
 
   //console.log('directories selected', result.filePaths[0])
 })

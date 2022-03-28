@@ -2,7 +2,6 @@ const { app, BrowserWindow, dialog, ipcMain, globalShortcut  } = require('electr
 const electron = require('electron');
 const path = require('path');
 const ProgressBar = require('electron-progressbar');
-const { autoUpdater } = require("electron-updater");
 
 var ipc = require('electron').ipcMain;
 
@@ -40,10 +39,6 @@ const createWindow = () => {
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();
-
-  console.log(process.env.npm_package_version);
-
-  autoUpdater.checkForUpdates();
 };
 
 // This method will be called when Electron has finished
@@ -78,33 +73,8 @@ app.on('activate', () => {
   }
 });
 
-//When new update is available
-autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-    type: 'info',
-    buttons: ['Ok'],
-    title: 'Application Update',
-    message: process.platform === 'win32' ? releaseNotes : releaseName,
-    detail: 'A new version is being downloaded.'
-  }
-  dialog.showMessageBox(dialogOpts, (response) =>{
-
-  })
-})
-
-//When update has downloaded
-autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-    type: 'info',
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: process.platform === 'win32' ? releaseNotes : releaseName,
-    detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-  }
-  dialog.showMessageBox(dialogOpts, (response) =>{
-    if (returnValue.response === 0) autoUpdater.quitAndInstall();
-  })
-})
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and import them here.
 
 
 ipcMain.on('select-dirs', async (event, arg) => {
@@ -122,13 +92,12 @@ mainWindow.webContents.send('updatefileLoc', folderPath);
   //console.log('directories selected', result.filePaths[0])
 })
 
-
-
 ipcMain.on('setSteamId', (event, steamid) => {    
   const fs = require("fs").promises;
   const path = require("path");
   const CSGO_ROUND_LENGTH = 115;
   var msgBox;
+
   
   async function getFrags(
     pathToJsonFiles,
@@ -157,7 +126,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
         console.info(`aborted... ${value}`);
       })
       .on('progress', function(value) {
-        progressBar.detail = `Value ${value} out of ${progressBar.getOptions().maxValue}...`;
+        progressBar.detail = `Demo ${value} out of ${progressBar.getOptions().maxValue}...`;
       });
           
     //Analyze each demo
@@ -567,4 +536,5 @@ ipcMain.on('setSteamId', (event, steamid) => {
   runFragFinder(folderPath);
 
 })
+
 

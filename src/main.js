@@ -33,10 +33,7 @@ const createWindow = () => {
   });
 
 
-  ipcMain.on('setSteamId', (event, steamid) => {
-    const webContents = event.sender
-    const win = BrowserWindow.fromWebContents(webContents)
-    
+  ipcMain.on('setSteamId', (event, steamid) => {    
     const fs = require("fs").promises;
     const path = require("path");
     const CSGO_ROUND_LENGTH = 115;

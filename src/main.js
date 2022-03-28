@@ -41,8 +41,9 @@ const createWindow = () => {
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();
 
+  console.log(process.env.npm_package_version);
 
-  autoUpdater.checkForUpdates()
+  autoUpdater.checkForUpdates();
 };
 
 // This method will be called when Electron has finished

@@ -69,7 +69,7 @@ const createWindow = () => {
           console.info(`aborted... ${value}`);
         })
         .on('progress', function(value) {
-          progressBar.detail = `Value ${value} out of ${progressBar.getOptions().maxValue}...`;
+          progressBar.detail = `Demo ${value} out of ${progressBar.getOptions().maxValue}...`;
         });
             
       //Analyze each demo

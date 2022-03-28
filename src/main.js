@@ -14,6 +14,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
+
 let mainWindow;
 let folderPath;
 let matchContent = '';

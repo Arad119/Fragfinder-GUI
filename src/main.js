@@ -1,6 +1,7 @@
 const { app, BrowserWindow, dialog, ipcMain, globalShortcut  } = require('electron');
 const electron = require('electron');
 const path = require('path');
+const ProgressBar = require('electron-progressbar');
 
 var ipc = require('electron').ipcMain;
 
@@ -50,10 +51,33 @@ const createWindow = () => {
         file => path.extname(file).toLowerCase() === ".json"
       );
     
+      //Progress bar
+      var progressBar = new ProgressBar({
+        indeterminate: false,
+        text: 'Preparing frags...',
+        detail: 'Processing demos...',
+        maxValue: demoFiles.length
+      });
+      
+      progressBar
+        .on('completed', function() {
+          console.info(`completed...`);
+          progressBar.detail = 'Task completed. Exiting...';
+        })
+        .on('aborted', function(value) {
+          console.info(`aborted... ${value}`);
+        })
+        .on('progress', function(value) {
+          progressBar.detail = `Value ${value} out of ${progressBar.getOptions().maxValue}...`;
+        });
+            
+      //Analyze each demo
       for (let i = 0; i < demoFiles.length; i++) {
         const data = await fs.readFile(`${pathToJsonFiles}/${demoFiles[i]}`);
         const matchData = await JSON.parse(data);
         console.log("analyzing", matchData.name);
+
+        progressBar.value += 1;
     
         demosHighlights.push({
           demoName: matchData.name.replace(".dem", ""),
@@ -150,10 +174,12 @@ const createWindow = () => {
       return demosHighlights;
     };
     
+    //If broken demo
     function demoIsBroken(matchData) {
       return matchData.rounds.length <= 15;
     }
     
+    //Misc fragtypes
     function getFragtype(kills, clutch) {
       if (kills.length >= 3) {
         return clutch ? "clutch" : `${kills.length}k`;
@@ -176,6 +202,7 @@ const createWindow = () => {
       );
     }
     
+    //If AntiEco
     function isAntieco(playerKills, matchData, roundNr) {
       const killedSteamIds = playerKills.map(kill => kill.killed_steamid);
       const enemyPlayers = matchData.players.filter(player =>
@@ -194,7 +221,7 @@ const createWindow = () => {
       return text;
     };
     
-    
+    //File creation
     async function createFiles(data) {
       for (const match of data) {
         const matchText = [`**playdemo ${match.demoName}.dem`];
@@ -321,9 +348,9 @@ const createWindow = () => {
     
       }
     
-    
       //console.log(matchContent)
     
+      //File Saving Dialog
       const { filePath, canceled } = await dialog.showSaveDialog({
         defaultPath: "highlights.txt",
         filters :[
@@ -340,10 +367,9 @@ const createWindow = () => {
       } else {
         msgBox = "File creation cancelled!";
       }
-    
-    
     };
     
+    //Get weapons
     function getWeaponsUsed(kills) {
       let weaponsUsed = kills
         .map(kill => [kill.weapon, kill.weaponType])
@@ -422,6 +448,7 @@ const createWindow = () => {
       return weaponsUsed;
     }
     
+    //Run fragfinder
     async function runFragFinder(folderPath) {
     
       matchContent = '';
@@ -431,7 +458,7 @@ const createWindow = () => {
         await createFiles(highlights);
         console.log("files created!");
     
-    
+        //Show file creation messagebox
         const options = {
           type: 'none',
           buttons: [],
@@ -510,8 +537,6 @@ mainWindow.webContents.send('updatefileLoc', folderPath);
 
   //console.log('directories selected', result.filePaths[0])
 })
-
-
 
 
 

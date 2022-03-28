@@ -1,7 +1,7 @@
 {
   "name": "fragfinder",
   "productName": "Fragfinder",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Electron App",
   "main": "src/main.js",
   "scripts": {
@@ -45,6 +45,7 @@
     }
   },
   "dependencies": {
+    "electron-progressbar": "^2.0.1",
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
@@ -59,7 +60,9 @@
   "build": {
     "appId": "Fragfinder",
     "win": {
-      "target": ["nsis"],
+      "target": [
+        "nsis"
+      ],
       "icon": "images/logo.ico"
     },
     "nsis": {

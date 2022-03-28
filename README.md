@@ -110,9 +110,10 @@ To get the program up and running follow these simple steps.
 
 1. Select the folder which your JSON files are located.
 2. Optional: Specify a STEAMID64 to only export their highlights - If no STEAMID64 is specified, all highlights will be exported.
-3. Process Demos and then specify a filepath for where the filepath where the highlights.txt file should get saved.
+3. Process Demos.
 4. Let the program process all of the json files, length can vary depending on how many demos there are.
-5. Find your highlights.txt file at you decided to save it.
+5. Specify a filepath for where the highlights.txt file should be saved.
+6. Find your highlights.txt file at the filepath you decided to save it.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

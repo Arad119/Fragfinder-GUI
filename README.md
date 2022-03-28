@@ -103,10 +103,8 @@ To get the program up and running follow these simple steps.
 ### Installation
 
 1. Download the latest release via [Fragfinder-GUI/releases](https://github.com/Arad119/Fragfinder-GUI/releases).
-2. Run "fragfinder Setup.exe".
-3. The program should start as soon as the program has been installed.
-4. You can find the installation path in "%LocalAppData%\fragfinder\app-1.0.1".
-5. Create a shortcut for "fragfinder.exe".
+2. Run "Fragfinder Setup.exe".
+3. Select your installation path.
 
 ### How to use
 
@@ -124,6 +122,7 @@ To get the program up and running follow these simple steps.
 ## Roadmap
 
 - [x] Add SteamID filtering
+- [x] Add Startmenu Shortcut & Installation Path Selection
 - [ ] Add JSON creation to the program 
 - [ ] Better UI
 

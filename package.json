@@ -1,7 +1,7 @@
 {
   "name": "fragfinder",
-  "productName": "fragfinder",
-  "version": "1.0.1",
+  "productName": "Fragfinder",
+  "version": "1.0.2",
   "description": "Electron App",
   "main": "src/main.js",
   "scripts": {
@@ -9,10 +9,11 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "build": "electron-builder"
   },
   "keywords": [],
-  "author": "https://github.com/Arad119",
+  "author": "Arad119",
   "license": "MIT",
   "config": {
     "forge": {
@@ -52,6 +53,21 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.61",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
     "@electron-forge/maker-zip": "^6.0.0-beta.61",
-    "electron": "16.0.4"
+    "electron": "^16.1.1",
+    "electron-builder": "^22.14.13"
+  },
+  "build": {
+    "appId": "Fragfinder",
+    "win": {
+      "target": ["nsis"],
+      "icon": "images/logo.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "images/logo.ico",
+      "uninstallerIcon": "images/logo.ico",
+      "uninstallDisplayName": "Fragfinder Uninstaller",
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }

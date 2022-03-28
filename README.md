@@ -109,7 +109,7 @@ To get the program up and running follow these simple steps.
 ### How to use
 
 1. Select the folder which your JSON files are located.
-2. Optional: Specify a STEAMID64 to only export their highlights - If no STEAMID64 is specified, all highlights will be exported.
+2. **Optional: Specify a STEAMID64 to only export their highlights - If no STEAMID64 is specified, all highlights will be exported.**
 3. Process Demos.
 4. Let the program process all of the json files, length can vary depending on how many demos there are.
 5. Specify a filepath for where the highlights.txt file should be saved.

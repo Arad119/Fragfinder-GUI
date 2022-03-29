@@ -14,7 +14,6 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-
 let mainWindow;
 let folderPath;
 let matchContent = '';

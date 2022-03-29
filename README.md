@@ -125,7 +125,7 @@ To get the program up and running follow these simple steps.
 - [x] Add SteamID filtering
 - [x] Add Startmenu Shortcut & Installation Path Selection
 - [x] See progress of demo processing 
-- [ ] Auto-updater
+- [ ] Auto-updater/Update notification
 - [ ] Add JSON creation to the program - Skip the need for CSGO Demos Manager
 - [ ] Better UI
 

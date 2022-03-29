@@ -10,7 +10,7 @@ ipc.on('close-main-window', function() {
 });
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+if (require('electron-squirrel-startup')) { 
   app.quit();
 }
 
@@ -19,9 +19,8 @@ let mainWindow;
 let folderPath;
 let matchContent = '';
 
-
+//Create Browser Window
 const createWindow = () => {
-  // Create the browser window.
   mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
     width: 1000,
@@ -34,7 +33,6 @@ const createWindow = () => {
     }
   });
 
-  // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
@@ -73,9 +71,6 @@ app.on('activate', () => {
   }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
-
 
 ipcMain.on('select-dirs', async (event, arg) => {
   const result = await dialog.showOpenDialog(mainWindow, {
@@ -87,9 +82,6 @@ ipcMain.on('select-dirs', async (event, arg) => {
 
 
 mainWindow.webContents.send('updatefileLoc', folderPath);
-
-
-  //console.log('directories selected', result.filePaths[0])
 })
 
 ipcMain.on('setSteamId', (event, steamid) => {    
@@ -536,5 +528,3 @@ ipcMain.on('setSteamId', (event, steamid) => {
   runFragFinder(folderPath);
 
 })
-
-

@@ -2,17 +2,14 @@ const { app, BrowserWindow, dialog, ipcMain, globalShortcut  } = require('electr
 const electron = require('electron');
 const path = require('path');
 const ProgressBar = require('electron-progressbar');
+const {autoUpdater} = require("electron-updater");
+const isDev = require('electron-is-dev');
 
 var ipc = require('electron').ipcMain;
 
 ipc.on('close-main-window', function() {
     app.quit();
 });
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { 
-  app.quit();
-}
 
 let mainWindow;
 let folderPath;
@@ -36,6 +33,11 @@ const createWindow = () => {
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();
+
+  if (!isDev) {
+    autoUpdater.checkForUpdates();
+  }
+  
 };
 
 // This method will be called when Electron has finished
@@ -77,8 +79,6 @@ ipcMain.on('select-dirs', async (event, arg) => {
   })
 
   folderPath = result.filePaths[0];
-
-
 
 mainWindow.webContents.send('updatefileLoc', folderPath);
 })
@@ -527,3 +527,33 @@ ipcMain.on('setSteamId', (event, steamid) => {
   runFragFinder(folderPath);
 
 })
+
+
+autoUpdater.on('update-available', (_event , releaseNotes, releaseName) => {
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['Ok'],
+    title: 'Application Update',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'A new version is being downloaded.'
+  }
+  dialog.showMessageBox(dialogOpts, (response) =>{
+
+  })
+})
+
+autoUpdater.on('error', (err) => {
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['Ok'],
+    title: 'Error when auto-updating',
+    message: err
+  }
+  dialog.showMessageBox(dialogOpts, (response) =>{
+
+  })
+})
+
+autoUpdater.on("update-downloaded", (info) => {
+  autoUpdater.quitAndInstall();  
+});

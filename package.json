@@ -1,15 +1,12 @@
 {
   "name": "fragfinder",
   "productName": "Fragfinder",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Electron App",
   "main": "src/main.js",
   "scripts": {
     "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\"",
+    "publish": "electron-builder -p always",
     "build": "electron-builder"
   },
   "keywords": [],
@@ -45,8 +42,9 @@
     }
   },
   "dependencies": {
+    "electron-is-dev": "^2.0.0",
     "electron-progressbar": "^2.0.1",
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-updater": "^4.6.5"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.61",
@@ -58,6 +56,13 @@
     "electron-builder": "^22.14.13"
   },
   "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Arad119",
+        "repo": "Fragfinder-GUI"
+      }
+    ],
     "appId": "Fragfinder",
     "win": {
       "target": [

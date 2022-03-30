@@ -125,9 +125,10 @@ To get the program up and running follow these simple steps.
 - [x] Add SteamID filtering
 - [x] Add Startmenu Shortcut & Installation Path Selection
 - [x] See progress of demo processing 
-- [ ] Auto-updater/Update notification
-- [ ] Add JSON creation to the program - Skip the need for CSGO Demos Manager
+- [x] Auto-updater/Update notification
 - [ ] Better UI
+- [ ] Add JSON creation to the program - Skip the need for CSGO Demos Manager
+
 
 See the [open issues](https://github.com/Arad119/Fragfinder-GUI/issues) for a full list of proposed features (and known issues).
 

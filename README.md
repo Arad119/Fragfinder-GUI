@@ -102,7 +102,7 @@ To get the program up and running follow these simple steps.
 
 ### Installation
 
-1. Download the latest release via [Fragfinder-GUI/releases](https://github.com/Arad119/Fragfinder-GUI/releases).
+1. Download the latest "Fragfinder-Setup-x.x.x.exe" via [Fragfinder-GUI/releases](https://github.com/Arad119/Fragfinder-GUI/releases).
 2. Run "Fragfinder Setup.exe".
 3. Select your installation path.
 

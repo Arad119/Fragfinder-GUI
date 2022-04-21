@@ -115,6 +115,8 @@ The project was made to skip the need to manually modify files and make the incr
   - The <b>round number</b> is shown at the end of each highlight string, for example <i>r25</i> for round 25.
   - the <b>x._</b> preceding every highlight is meant to be replaced by a number when you have recorded the frag, making the whole line appropriate as a filename for your video file. The information provided in the filename will then be easily searchable in your editing software, serving as helpful tags.
 
+  Explanation taken from [henb13/frag-finder](https://github.com/HenB13/frag-finder).
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 

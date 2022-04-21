@@ -44,7 +44,7 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
-        <li><a href="#example-output-with-explanation">Example output with explanation</a></li>
+        <li><a href="#example-output-with-explanation">Example Output With Explanation</a></li>
       </ul>
     </li>
     <li>
@@ -52,7 +52,7 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
-        <li><a href="#how-to-use">How to use</a></li>
+        <li><a href="#how-to-use">How To Use</a></li>
       </ul>
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -86,7 +86,7 @@ The project was made to skip the need to manually modify files and make the incr
 
 
 <!-- OUTPUT EXAMPLE -->
-### Example output with explanation
+### Example Output With Explanation
 
 ```
 **playdemo astralis-vs-g2-m1-dust2_62005.dem
@@ -145,7 +145,7 @@ To get the program up and running follow these simple steps.
 2. Run "Fragfinder Setup.exe".
 3. Select your installation path.
 
-### How to use
+### How To Use
 
 1. Select the folder which your JSON files are located.
 2. **Optional: Specify a STEAMID64 to only export their highlights - If no STEAMID64 is specified, all highlights will be exported.**

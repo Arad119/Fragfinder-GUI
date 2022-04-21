@@ -44,6 +44,7 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#example-output-with-explanation">Example output with explanation</a></li>
       </ul>
     </li>
     <li>
@@ -66,7 +67,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![FragFinder-GUI Screenshot][product-screenshot]
+![FragFinder-GUI Screenshot][product-screenshot](#)
 
 The project was made to skip the need to manually modify files and make the incredible [henb13/frag-finder](https://github.com/HenB13/frag-finder) even better with an added GUI. Uses JSON files created with CSGO Demo Manager to generate readable highlight timestamps, also able to filter out specific player highlights.
 
@@ -85,7 +86,7 @@ The project was made to skip the need to manually modify files and make the incr
 
 
 <!-- OUTPUT EXAMPLE -->
-## Example output with explanation
+### Example output with explanation
 
 ```
 **playdemo astralis-vs-g2-m1-dust2_62005.dem

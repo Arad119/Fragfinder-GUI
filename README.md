@@ -166,7 +166,7 @@ To get the program up and running follow these simple steps.
 - [x] See progress of demo processing 
 - [x] Auto-updater/Update notification
 - [ ] Better UI
-- [ ] Add JSON creation to the program - Skip the need for CSGO Demos Manager
+- [ ] Create highlights file without prerequisites - Skip the need for CSGO Demos Manager
 
 
 See the [open issues](https://github.com/Arad119/Fragfinder-GUI/issues) for a full list of proposed features (and known issues).

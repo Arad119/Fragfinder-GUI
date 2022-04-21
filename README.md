@@ -68,7 +68,7 @@
 
 ![FragFinder-GUI Screenshot][product-screenshot]
 
-The project was made to skip the need to manually modify files and make the incredible [henb13/frag-finder](https://github.com/HenB13/frag-finder) even better with an added GUI. 
+The project was made to skip the need to manually modify files and make the incredible [henb13/frag-finder](https://github.com/HenB13/frag-finder) even better with an added GUI. Uses JSON files created with CSGO Demo Manager to generate readable highlight timestamps, also able to filter out specific player highlights.
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>

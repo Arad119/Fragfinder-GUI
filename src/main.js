@@ -90,6 +90,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
   var msgBox;
 
   
+  //Parsing JSON files and getting the match content
   async function getFrags(
     pathToJsonFiles,
     playerChosen = false
@@ -528,7 +529,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
 
 })
 
-
+//Autoupdater update available
 autoUpdater.on('update-available', (_event , releaseNotes, releaseName) => {
   const dialogOpts = {
     type: 'info',
@@ -542,6 +543,7 @@ autoUpdater.on('update-available', (_event , releaseNotes, releaseName) => {
   })
 })
 
+//Autoupdater update error
 autoUpdater.on('error', (err) => {
   const dialogOpts = {
     type: 'info',
@@ -554,6 +556,7 @@ autoUpdater.on('error', (err) => {
   })
 })
 
+//Autoupdater update completion
 autoUpdater.on("update-downloaded", (info) => {
   autoUpdater.quitAndInstall();  
 });

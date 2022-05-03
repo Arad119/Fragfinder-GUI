@@ -1,3 +1,4 @@
+/* Importing required modules. */
 const { app, BrowserWindow, dialog, ipcMain, globalShortcut  } = require('electron');
 const electron = require('electron');
 const path = require('path');
@@ -5,17 +6,24 @@ const ProgressBar = require('electron-progressbar');
 const {autoUpdater} = require("electron-updater");
 const isDev = require('electron-is-dev');
 
+/* Importing the ipcMain module from the electron module. */
 var ipc = require('electron').ipcMain;
 
+/* Close app when main window is closed. */
 ipc.on('close-main-window', function() {
     app.quit();
 });
 
+/* Creating variables called mainWindow, folderPath, and matchContent. */
 let mainWindow;
 let folderPath;
 let matchContent = '';
 
-//Create Browser Window
+/**
+ * Create a new BrowserWindow and defining settings for 
+ * these properties: autoHideMenuBar, width, height,
+ * webPreferences, and load the index.html file.
+ */
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
@@ -29,50 +37,46 @@ const createWindow = () => {
     }
   });
 
+  /* Loading the index.html file into the mainWindow. */
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
-  // Open the DevTools.
+  /* Open the DevTools. */
   //mainWindow.webContents.openDevTools();
 
+/* Checking for updates if non developer mode. */
   if (!isDev) {
     autoUpdater.checkForUpdates();
   }
   
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+/* Creating app window. */
 app.on('ready', createWindow);
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+/* Quit when all windows are closed, except on macOS. */
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
+/* Disable devtools shortcut. */
 app.on('ready', () => {
-  // Register a shortcut listener for Ctrl + Shift + I
   globalShortcut.register('Control+Shift+I', () => {
-      // When the user presses Ctrl + Shift + I, this function will get called
-      // You can modify this function to do other things, but if you just want
-      // to disable the shortcut, you can just return false
       return false;
   });
 });
 
+/* Re-create a window when the app is activated. */
 app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
 });
 
 
+/* Listening for a message from the renderer process. When it receives the message, it opens a dialog
+ * box to select a folder. It then sends the folder path back to the renderer process. */
 ipcMain.on('select-dirs', async (event, arg) => {
   const result = await dialog.showOpenDialog(mainWindow, {
     properties: ['openDirectory']
@@ -83,6 +87,8 @@ ipcMain.on('select-dirs', async (event, arg) => {
 mainWindow.webContents.send('updatefileLoc', folderPath);
 })
 
+/* Set steamid to the steamid that the user inputs.
+ * Processes highlights data and exports them. */
 ipcMain.on('setSteamId', (event, steamid) => {    
   const fs = require("fs").promises;
   const path = require("path");
@@ -90,7 +96,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
   var msgBox;
 
   
-  //Parsing JSON files and getting the match content
+  /* Parsing JSON files and get match content. */
   async function getFrags(
     pathToJsonFiles,
     playerChosen = false
@@ -101,7 +107,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
       file => path.extname(file).toLowerCase() === ".json"
     );
   
-    //Progress bar
+    /* Creating a progress bar. */
     var progressBar = new ProgressBar({
       indeterminate: false,
       text: 'Preparing frags...',
@@ -109,6 +115,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
       maxValue: demoFiles.length
     });
     
+    /* Setting up event handlers for the progress bar. */
     progressBar
       .on('completed', function() {
         console.info(`completed...`);
@@ -121,7 +128,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
         progressBar.detail = `Demo ${value} out of ${progressBar.getOptions().maxValue}...`;
       });
           
-    //Analyze each demo
+    /* Analyze each demo. */
     for (let i = 0; i < demoFiles.length; i++) {
       const data = await fs.readFile(`${pathToJsonFiles}/${demoFiles[i]}`);
       const matchData = await JSON.parse(data);
@@ -176,8 +183,8 @@ ipcMain.on('setSteamId', (event, steamid) => {
           return acc;
         }, {});
   
+        /* Filtering out all players except the chosen user. */
         if (playerChosen) {
-          // Filter out all players except chosen user
           roundkillsPerPlayer = Object.fromEntries(
             Object.entries(roundkillsPerPlayer).filter(
               ([_, val]) => val.steamId === playerChosen
@@ -224,12 +231,12 @@ ipcMain.on('setSteamId', (event, steamid) => {
     return demosHighlights;
   };
   
-  //If broken demo
+  /* If demo is broken. */
   function demoIsBroken(matchData) {
     return matchData.rounds.length <= 15;
   }
   
-  //Misc fragtypes
+  /* Misc fragtypes. */
   function getFragtype(kills, clutch) {
     if (kills.length >= 3) {
       return clutch ? "clutch" : `${kills.length}k`;
@@ -244,7 +251,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
     return `${kills.length}k`;
   }
   
-  //1k with hs or 2k where one is hs. Could pick up potentially great onedeags.
+  /* 1k with hs or 2k where one is hs - Only with deagle kills. */
   function hasNotableDeagleFrags(kills) {
     return kills.some(
       ({ weapon, is_headshot }) =>
@@ -252,7 +259,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
     );
   }
   
-  //If AntiEco
+  /* If AntiEco. */
   function isAntieco(playerKills, matchData, roundNr) {
     const killedSteamIds = playerKills.map(kill => kill.killed_steamid);
     const enemyPlayers = matchData.players.filter(player =>
@@ -266,12 +273,13 @@ ipcMain.on('setSteamId', (event, steamid) => {
     );
   }
   
+  /* Text camelization. */
   const camelizeIsh = function (text) {
     text = text.replace(/[-_\s.]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""));
     return text;
   };
-  
-  //File creation
+
+  /* Process highlights data and export. */
   async function createFiles(data) {
     for (const match of data) {
       const matchText = [`**playdemo ${match.demoName}.dem`];
@@ -296,7 +304,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
           }) => {
             const playerCamelized = camelizeIsh(player);
   
-            //i.e. 1v3-4k vs just 4k
+            /* 1v3-4k vs just 4k. */
             const fragTypeDetails =
               fragType === "clutch"
                 ? clutchOpponents === killAmount
@@ -366,12 +374,13 @@ ipcMain.on('setSteamId', (event, steamid) => {
   
       matchFragFormat.forEach(({ fragType, fragFormat }) => {
         if (fragType === "3k") {
-          //Regular indented
+
+          /* Regular indented. */
           if (!matchText.includes("\n         ----3k's:\n")) {
             matchText.push("\n         ----3k's:\n");
           }
-  
-          //Extra indented for 3k's
+          
+          /* Extra indented for 3k's. */
           matchText.push(`               ${fragFormat}\n`);
         } else {
           if (!fragType.includes("deagle")) {
@@ -398,9 +407,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
   
     }
   
-    //console.log(matchContent)
-  
-    //File Saving Dialog
+    /* Creating highlights file and saving it to the user's computer. */
     const { filePath, canceled } = await dialog.showSaveDialog({
       defaultPath: "highlights.txt",
       filters :[
@@ -419,7 +426,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
     }
   };
   
-  //Get weapons
+  /* Gathers info about weapon usage from throughout the game. */
   function getWeaponsUsed(kills) {
     let weaponsUsed = kills
       .map(kill => [kill.weapon, kill.weaponType])
@@ -498,7 +505,11 @@ ipcMain.on('setSteamId', (event, steamid) => {
     return weaponsUsed;
   }
   
-  //Run fragfinder
+  /**
+  * Takes a folder path, gets the highlights from the folder, creates a textfile with 
+  * data from each highlight, and displays a message box with results
+  * @param folderPath - The path to the folder where the demo files are located.
+  */
   async function runFragFinder(folderPath) {
   
     matchContent = '';
@@ -508,7 +519,7 @@ ipcMain.on('setSteamId', (event, steamid) => {
       await createFiles(highlights);
       console.log("files created!");
   
-      //Show file creation messagebox
+      /* Creating file creation message box. */
       const options = {
         type: 'none',
         buttons: [],
@@ -525,11 +536,12 @@ ipcMain.on('setSteamId', (event, steamid) => {
     }
   }
 
+/* Run the runFragFinder function with the folderPath as the argument. */
   runFragFinder(folderPath);
 
 })
 
-//Autoupdater update available
+/* Showing dialog box when an update is available. */
 autoUpdater.on('update-available', (_event , releaseNotes, releaseName) => {
   const dialogOpts = {
     type: 'info',
@@ -543,7 +555,7 @@ autoUpdater.on('update-available', (_event , releaseNotes, releaseName) => {
   })
 })
 
-//Autoupdater update error
+/* Showing dialog box upon update error. */
 autoUpdater.on('error', (err) => {
   const dialogOpts = {
     type: 'info',
@@ -556,7 +568,7 @@ autoUpdater.on('error', (err) => {
   })
 })
 
-//Autoupdater update completion
+/* Autoquit app on update completion. */
 autoUpdater.on("update-downloaded", (info) => {
   autoUpdater.quitAndInstall();  
 });

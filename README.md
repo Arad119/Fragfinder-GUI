@@ -165,7 +165,7 @@ To get the program up and running follow these simple steps.
 - [x] Add Startmenu Shortcut & Installation Path Selection
 - [x] See progress of demo processing 
 - [x] Auto-updater/Update notification
-- [ ] Better UI
+- [x] Better UI
 - [ ] Create highlights file without prerequisites - Skip the need for CSGO Demos Manager
 
 

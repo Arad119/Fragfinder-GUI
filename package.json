@@ -1,7 +1,7 @@
 {
   "name": "fragfinder",
   "productName": "Fragfinder",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Electron App",
   "main": "src/main.js",
   "scripts": {
@@ -42,7 +42,6 @@
     }
   },
   "dependencies": {
-    "@notionhq/client": "^1.0.4",
     "electron-is-dev": "^2.0.0",
     "electron-progressbar": "^2.0.1",
     "electron-updater": "^4.6.5"

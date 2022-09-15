@@ -1,4 +1,3 @@
-
 document.getElementById('dirs').addEventListener('click', (evt) => {
   evt.preventDefault()
   window.postMessage({

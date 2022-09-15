@@ -27,8 +27,8 @@ let matchContent = '';
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
-    width: 1000,
-    height: 600,
+    width: 1024,
+    height: 728,
     webPreferences: {
       preload: __dirname + "/preload.js",
       nodeIntegration: true,
@@ -106,6 +106,24 @@ ipcMain.on('setSteamId', (event, steamid) => {
     const demoFiles = files.filter(
       file => path.extname(file).toLowerCase() === ".json"
     );
+
+    /* Prevent progressbar to start if there are no json files. */
+    if (demoFiles.length === 0) { 
+      msgBox = `There are no ".json" files to process!`;
+
+      const options = {
+        type: 'none',
+        buttons: [],
+        defaultId: 0,
+        title: 'File creation',
+        message: msgBox,
+      };
+    
+      dialog.showMessageBox(null, options);
+
+
+      return;
+    }
   
     /* Creating a progress bar. */
     var progressBar = new ProgressBar({
@@ -572,3 +590,4 @@ autoUpdater.on('error', (err) => {
 autoUpdater.on("update-downloaded", (info) => {
   autoUpdater.quitAndInstall();  
 });
+ 

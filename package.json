@@ -6,7 +6,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron-forge start",
-    "publish": "electron-builder -p always",
+    "publish": "electron-builder -p never",
     "build": "electron-builder"
   },
   "keywords": [],

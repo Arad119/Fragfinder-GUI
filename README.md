@@ -135,8 +135,9 @@ To get the program up and running follow these simple steps.
 3. Go back to the homescreen.
 4. Select your folder path from within the list navigation. 
 5. Select the demos you want to analyze.
-6. Right click and select "Export JSON".
-7. Specify the filepath you want to use to save the JSON files.
+6. Analyze the demo(s).
+7. Right click and select "Export JSON".
+8. Specify the filepath you want to use to save the JSON files.
 ```
 
 ### Installation

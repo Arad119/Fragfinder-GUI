@@ -15,6 +15,14 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
+---
+
+## ⛔ THIS PROJECT IS NO LONGER IN DEVELOPMENT ⛔
+
+With the release of CS2, I'm putting this project aside to focus on other things in life ✌️
+
+---
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">

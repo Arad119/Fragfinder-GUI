@@ -11,6 +11,13 @@ const path = require("path");
 const ProgressBar = require("electron-progressbar");
 const { autoUpdater } = require("electron-updater");
 const isDev = require("electron-is-dev");
+const {
+  analyzeDemo,
+  DemoSource,
+  ExportFormat,
+} = require("@akiver/cs-demo-analyzer");
+const os = require("os");
+const tmpdir = os.tmpdir();
 
 /* Importing the ipcMain module from the electron module. */
 var ipc = require("electron").ipcMain;
@@ -84,10 +91,10 @@ app.on("activate", () => {
 ipcMain.on("select-dirs", async (event, arg) => {
   const result = await dialog.showOpenDialog(mainWindow, {
     properties: ["openDirectory"],
+    filters: [{ name: "Demo Files", extensions: ["dem"] }],
   });
 
   folderPath = result.filePaths[0];
-
   mainWindow.webContents.send("updatefileLoc", folderPath);
 });
 
@@ -99,18 +106,38 @@ ipcMain.on("setSteamId", (event, steamid) => {
   const CSGO_ROUND_LENGTH = 115;
   var msgBox;
 
-  /* Parsing JSON files and get match content. */
-  async function getFrags(pathToJsonFiles, playerChosen = false) {
+  /* Analyzing demo file and returning JSON path */
+  async function analyzeDemoFile(demoPath) {
+    const tempOutputPath = path.join(tmpdir, "fragfinder-temp");
+
+    // Create temp directory if it doesn't exist
+    await fs.mkdir(tempOutputPath, { recursive: true });
+
+    await analyzeDemo({
+      demoPath: demoPath,
+      outputFolderPath: tempOutputPath,
+      format: ExportFormat.JSON,
+      analyzePositions: false,
+      minify: false,
+      onStderr: console.error,
+      onStdout: console.log,
+    });
+
+    // The output filename will be the demo filename with .json extension
+    const jsonFileName = path.basename(demoPath, ".dem") + ".json";
+    return path.join(tempOutputPath, jsonFileName);
+  }
+
+  /* Modified getFrags function */
+  async function getFrags(pathToDemoFiles, playerChosen = false) {
     const demosHighlights = [];
-    const files = await fs.readdir(pathToJsonFiles);
+    const files = await fs.readdir(pathToDemoFiles);
     const demoFiles = files.filter(
-      (file) => path.extname(file).toLowerCase() === ".json"
+      (file) => path.extname(file).toLowerCase() === ".dem"
     );
 
-    /* Prevent progressbar to start if there are no json files. */
     if (demoFiles.length === 0) {
-      msgBox = `There are no ".json" files to process!`;
-
+      msgBox = `There are no ".dem" files to process!`;
       const options = {
         type: "none",
         buttons: [],
@@ -118,13 +145,10 @@ ipcMain.on("setSteamId", (event, steamid) => {
         title: "File creation",
         message: msgBox,
       };
-
       dialog.showMessageBox(null, options);
-
       return;
     }
 
-    /* Creating a progress bar. */
     var progressBar = new ProgressBar({
       indeterminate: false,
       text: "Preparing frags...",
@@ -149,110 +173,123 @@ ipcMain.on("setSteamId", (event, steamid) => {
 
     /* Analyze each demo. */
     for (let i = 0; i < demoFiles.length; i++) {
-      const data = await fs.readFile(`${pathToJsonFiles}/${demoFiles[i]}`);
-      const matchData = await JSON.parse(data);
-      console.log("analyzing", matchData.name);
+      const demoPath = path.join(pathToDemoFiles, demoFiles[i]);
+      console.log("analyzing", demoFiles[i]);
 
-      progressBar.value += 1;
+      try {
+        // Analyze demo and get JSON path
+        const jsonPath = await analyzeDemoFile(demoPath);
+        const data = await fs.readFile(jsonPath);
+        const matchData = await JSON.parse(data);
 
-      demosHighlights.push({
-        demoName: matchData.name.replace(".dem", ""),
-        map: matchData.map_name.replace("de_", ""),
-        roundsWithHighlights: [],
-      });
+        if (!matchData.rounds || !matchData.kills || !matchData.clutches) {
+          console.error(`Demo ${demoFiles[i]} has missing required data`);
+          continue;
+        }
 
-      if (demoIsBroken(matchData)) {
-        demosHighlights[
-          i
-        ].breakMsg = `Can't extract highlights from this demo - there's only ${matchData.rounds.length} rounds in the JSON file. The demo is probably partially corrupted, but looking through it manually in-game might work. You could also try to analyze it again in CS:GO Demos Manager, export a new JSON file and try again.`;
-        continue;
-      }
-      const allNotableClutchesInMatch = matchData.players
-        .filter((player) =>
-          player.clutches.some(
-            (clutch) => clutch.has_won && clutch.opponent_count >= 3
-          )
-        )
-        .map((player) => {
-          return player.clutches
-            .filter((clutch) => clutch.has_won && clutch.opponent_count >= 3)
-            .map(({ opponent_count, round_number }) => ({
-              player: player.name,
-              opponentCount: opponent_count,
-              roundNumber: round_number,
-            }));
-        })
-        .flat();
+        progressBar.value += 1;
 
-      matchData.rounds.forEach((currentRound, roundIndex) => {
-        demosHighlights[i].roundsWithHighlights.push({
-          roundNumber: currentRound.number,
-          frags: [],
+        demosHighlights.push({
+          demoName: matchData.name
+            ? matchData.name.replace(".dem", "")
+            : path.basename(demoPath, ".dem"),
+          map: matchData.mapName ? matchData.mapName.replace("de_", "") : "",
+          roundsWithHighlights: [],
         });
 
-        let roundkillsPerPlayer = currentRound.kills.reduce((acc, kill) => {
-          if (acc[kill.killer_name]) {
-            acc[kill.killer_name].kills.push(kill);
-          } else {
-            acc[kill.killer_name] = {
-              kills: [kill],
-              steamId: kill.killer_steamid,
-            };
-          }
-          return acc;
-        }, {});
-
-        /* Filtering out all players except the chosen user. */
-        if (playerChosen) {
-          roundkillsPerPlayer = Object.fromEntries(
-            Object.entries(roundkillsPerPlayer).filter(
-              ([_, val]) => val.steamId === playerChosen
-            )
-          );
+        if (demoIsBroken(matchData)) {
+          demosHighlights[
+            i
+          ].breakMsg = `Can't extract highlights from this demo - there's only ${matchData.rounds.length} rounds in the JSON file. The demo is probably partially corrupted, but looking through it manually in-game might work. You could also try to analyze it again in CS:GO Demos Manager, export a new JSON file and try again.`;
+          continue;
         }
 
-        for (const player in roundkillsPerPlayer) {
-          const { kills, steamId } = roundkillsPerPlayer[player];
-          const tickFirstKill = kills[0].tick - 200;
-          const clutch = allNotableClutchesInMatch.find(
-            ({ roundNumber, player }) =>
-              roundNumber === currentRound.number && player === player
+        const allNotableClutchesInMatch = matchData.clutches
+          .filter((clutch) => clutch.won && clutch.opponentCount >= 3)
+          .map((clutch) => ({
+            player: clutch.clutcherName,
+            opponentCount: clutch.opponentCount,
+            roundNumber: clutch.roundNumber,
+          }));
+
+        matchData.rounds.forEach((currentRound, roundIndex) => {
+          demosHighlights[i].roundsWithHighlights.push({
+            roundNumber: currentRound.number,
+            frags: [],
+          });
+
+          // Filter kills for current round
+          const roundKills = matchData.kills.filter(
+            (kill) => kill.roundNumber === currentRound.number
           );
 
-          const fragType = getFragtype(kills, clutch);
+          // Group kills by player for current round
+          let roundkillsPerPlayer = roundKills.reduce((acc, kill) => {
+            if (acc[kill.killerName]) {
+              acc[kill.killerName].kills.push(kill);
+            } else {
+              acc[kill.killerName] = {
+                kills: [kill],
+                steamId: kill.killerSteamId,
+              };
+            }
+            return acc;
+          }, {});
 
-          if (kills.length >= 3 || fragType.includes("deagle")) {
-            const team = kills[0].killer_team
-              ? kills[0].killer_team.includes("]")
-                ? kills[0].killer_team.split("]")[1].trim()
-                : kills[0].killer_team.trim()
-              : "not found";
-
-            demosHighlights[i].roundsWithHighlights[roundIndex].frags.push({
-              player,
-              steamId,
-              team,
-              fragType,
-              ...(clutch ? { clutchOpponents: clutch.opponentCount } : {}),
-              antieco: isAntieco(kills, matchData, currentRound),
-              killAmount: kills.length,
-              tick: tickFirstKill,
-              individualKills: kills.map(({ time_death_seconds, weapon }) => ({
-                timestamp: time_death_seconds,
-                weapon: weapon.weapon_name,
-                weaponType: weapon.type,
-              })),
-            });
+          if (playerChosen) {
+            roundkillsPerPlayer = Object.fromEntries(
+              Object.entries(roundkillsPerPlayer).filter(
+                ([_, val]) => val.steamId === playerChosen
+              )
+            );
           }
-        }
-      });
+
+          for (const player in roundkillsPerPlayer) {
+            const { kills, steamId } = roundkillsPerPlayer[player];
+            const tickFirstKill = kills[0].tick - 200;
+            const clutch = allNotableClutchesInMatch.find(
+              ({ roundNumber, player: clutchPlayer }) =>
+                roundNumber === currentRound.number && clutchPlayer === player
+            );
+
+            const fragType = getFragtype(kills, clutch);
+
+            if (kills.length >= 3 || fragType.includes("deagle")) {
+              const team = kills[0].killerTeamName;
+
+              demosHighlights[i].roundsWithHighlights[roundIndex].frags.push({
+                player,
+                steamId,
+                team,
+                fragType,
+                ...(clutch ? { clutchOpponents: clutch.opponentCount } : {}),
+                antieco: isAntieco(kills, matchData, currentRound),
+                killAmount: kills.length,
+                tick: tickFirstKill,
+                individualKills: kills.map((kill) => ({
+                  timestamp: CSGO_ROUND_LENGTH - kill.tick / matchData.tickrate,
+                  weapon: kill.weaponName,
+                  weaponType: kill.weaponType,
+                })),
+              });
+            }
+          }
+        });
+
+        // Clean up temp JSON file
+        await fs.unlink(jsonPath);
+      } catch (error) {
+        console.error(`Error processing demo ${demoFiles[i]}:`, error);
+        continue;
+      }
     }
     return demosHighlights;
   }
 
   /* If demo is broken. */
   function demoIsBroken(matchData) {
-    return matchData.rounds.length <= 15;
+    // CS2 demos typically have at least 12 rounds in a normal match
+    return matchData.rounds.length <= 12;
   }
 
   /* Misc fragtypes. */
@@ -262,7 +299,7 @@ ipcMain.on("setSteamId", (event, steamid) => {
     }
     if (hasNotableDeagleFrags(kills)) {
       const deagleKills = kills.filter(
-        (kill) => kill.weapon.weapon_name === "Desert Eagle"
+        (kill) => kill.weaponName === "Desert Eagle"
       );
 
       return `deagle${deagleKills.length}k`;
@@ -273,22 +310,22 @@ ipcMain.on("setSteamId", (event, steamid) => {
   /* 1k with hs or 2k where one is hs - Only with deagle kills. */
   function hasNotableDeagleFrags(kills) {
     return kills.some(
-      ({ weapon, is_headshot }) =>
-        weapon.weapon_name === "Desert Eagle" && is_headshot
+      ({ weaponName, isHeadshot }) =>
+        weaponName === "Desert Eagle" && isHeadshot
     );
   }
 
   /* If AntiEco. */
-  function isAntieco(playerKills, matchData, roundNr) {
-    const killedSteamIds = playerKills.map((kill) => kill.killed_steamid);
-    const enemyPlayers = matchData.players.filter((player) =>
-      killedSteamIds.includes(player.steamid)
-    );
+  function isAntieco(kills, matchData, currentRound) {
+    const victimTeam = kills[0].victimTeamName;
+    const teamData =
+      victimTeam === matchData.teamA.name ? matchData.teamA : matchData.teamB;
 
+    // CS2 doesn't have detailed economy data in the current format
+    // We'll have to use a simpler check based on round type
     return (
-      enemyPlayers.every(
-        (player) => player.equipement_value_rounds[roundNr] < 1000
-      ) && ![1, 16].includes(roundNr)
+      currentRound.teamAEconomyType === "eco" ||
+      currentRound.teamBEconomyType === "eco"
     );
   }
 
@@ -489,6 +526,11 @@ ipcMain.on("setSteamId", (event, steamid) => {
 
           case "MP5-SD":
             acc["mp5"] = acc["mp5"] + 1 || 1;
+            return acc;
+
+          case "USP-S":
+          case "USP":
+            acc["USP"] = acc["USP"] + 1 || 1;
             return acc;
 
           default:

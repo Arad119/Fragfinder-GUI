@@ -656,7 +656,8 @@ autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
     buttons: ["Ok"],
     title: "Application Update",
     message: process.platform === "win32" ? releaseNotes : releaseName,
-    detail: "A new version is being downloaded.",
+    detail:
+      "A new version is being downloaded in the background and will automatically close the app when it's done.",
   };
   dialog.showMessageBox(dialogOpts, (response) => {});
 });

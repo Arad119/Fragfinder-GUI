@@ -1,5 +1,6 @@
 // Import required Electron modules
 const { contextBridge, ipcRenderer } = require("electron");
+const { version } = require("../package.json");
 
 // Set up message handling once the process is loaded
 process.once("loaded", () => {
@@ -18,4 +19,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
   filePathInput: (callback) => ipcRenderer.on("updatefileLoc", callback),
   // Allow renderer to trigger demo processing with Steam ID
   processDemos: (steamid) => ipcRenderer.send("setSteamId", steamid),
+  getVersion: () => version,
 });

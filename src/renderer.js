@@ -22,3 +22,8 @@ setButton.addEventListener("click", () => {
   // Send Steam ID to main process to begin demo processing
   window.electronAPI.processDemos(steamid);
 });
+
+// Display version number
+document.getElementById(
+  "version-label"
+).textContent = `v${window.electronAPI.getVersion()}`;

@@ -109,16 +109,7 @@ ipcMain.on("setSteamId", (event, steamid) => {
   /* Analyzing demo file and returning JSON path */
   async function analyzeDemoFile(demoPath) {
     const tempOutputPath = path.join(tmpdir, "fragfinder-temp");
-
-    // Create temp directory if it doesn't exist
     await fs.mkdir(tempOutputPath, { recursive: true });
-
-    // Debug log the analyzer options
-    console.log("\nAnalyzing demo with options:", {
-      demoPath,
-      outputFolderPath: tempOutputPath,
-      format: ExportFormat.JSON,
-    });
 
     await analyzeDemo({
       demoPath: demoPath,
@@ -130,15 +121,20 @@ ipcMain.on("setSteamId", (event, steamid) => {
       onStdout: console.log,
     });
 
-    // The output filename will be the demo filename with .json extension
     const jsonFileName = path.basename(demoPath, ".dem") + ".json";
     const jsonPath = path.join(tempOutputPath, jsonFileName);
 
-    // Debug log the raw JSON content
+    // Read the raw JSON file
     const rawJson = await fs.readFile(jsonPath, "utf8");
-    console.log("\nFirst few kills from raw JSON:");
-    const parsed = JSON.parse(rawJson);
-    console.log(parsed.kills.slice(0, 2));
+
+    // Fix all variations of steamID fields before they get parsed
+    const fixedJson = rawJson.replace(
+      /("(?:steamId|killerSteamId|victimSteamId|clutcherSteamId|assistSteamId)"):\s*(\d{17})/g,
+      (match, field, steamId) => `${field}:"${steamId}"`
+    );
+
+    // Write the fixed JSON back to the file
+    await fs.writeFile(jsonPath, fixedJson);
 
     return jsonPath;
   }
@@ -201,7 +197,13 @@ ipcMain.on("setSteamId", (event, steamid) => {
         // Analyze demo and get JSON path
         const jsonPath = await analyzeDemoFile(demoPath);
         const data = await fs.readFile(jsonPath);
-        const matchData = await JSON.parse(data);
+        // Use the same reviver function here
+        const matchData = JSON.parse(data, (key, value) => {
+          if (typeof value === "number" && value > Number.MAX_SAFE_INTEGER) {
+            return value.toString();
+          }
+          return value;
+        });
 
         // Ensure all steamIDs in kills are strings
         matchData.kills = matchData.kills.map((kill) => ({
@@ -209,19 +211,6 @@ ipcMain.on("setSteamId", (event, steamid) => {
           killerSteamId: String(kill.killerSteamId),
           victimSteamId: String(kill.victimSteamId),
         }));
-
-        // Add debug logging for all kills in the demo
-        console.log("\nUnique players and their steam IDs in this demo:");
-        const uniquePlayers = new Set();
-        matchData.kills.forEach((kill) => {
-          uniquePlayers.add(
-            JSON.stringify({
-              name: kill.killerName,
-              steamId: kill.killerSteamId, // Now guaranteed to be a string
-            })
-          );
-        });
-        console.log([...uniquePlayers].map((p) => JSON.parse(p)));
 
         if (!matchData.rounds || !matchData.kills || !matchData.clutches) {
           console.error(`Demo ${demoFiles[i]} has missing required data`);
@@ -287,33 +276,6 @@ ipcMain.on("setSteamId", (event, steamid) => {
               Object.entries(roundkillsPerPlayer).filter(
                 ([_, val]) => val.steamId === playerChosen
               )
-            );
-          }
-
-          // Add debug logging for filtered kills
-          if (playerChosen) {
-            const playerKills = matchData.kills.filter(
-              (kill) => kill.killerSteamId === playerChosen
-            );
-            console.log(
-              `\nFound ${playerKills.length} kills for steamID ${playerChosen} in this demo`
-            );
-            if (playerKills.length > 0) {
-              console.log("Sample kill:", playerKills[0]);
-            }
-          }
-
-          // When filtering roundkillsPerPlayer
-          if (playerChosen) {
-            const beforeFilter = Object.keys(roundkillsPerPlayer).length;
-            roundkillsPerPlayer = Object.fromEntries(
-              Object.entries(roundkillsPerPlayer).filter(
-                ([_, val]) => val.steamId === playerChosen
-              )
-            );
-            const afterFilter = Object.keys(roundkillsPerPlayer).length;
-            console.log(
-              `\nRound kills filtering: ${beforeFilter} players before, ${afterFilter} after filter`
             );
           }
 

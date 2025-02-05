@@ -17,9 +17,9 @@
 
 ---
 
-## ⛔ THIS PROJECT IS NO LONGER IN DEVELOPMENT ⛔
+## ⛔ THIS PROJECT IS NO LONGER IN ACTIVE DEVELOPMENT ⛔
 
-With the release of CS2, I'm putting this project aside to focus on other things in life ✌️
+Not really sure how much I'll be contibuting to this software in the future, as of now it works as intended with both CS2 and CSGO demos. ✌️
 
 ---
 
@@ -51,7 +51,6 @@ With the release of CS2, I'm putting this project aside to focus on other things
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
         <li><a href="#how-to-use">How To Use</a></li>
       </ul>
@@ -76,6 +75,7 @@ The project was made to skip the need to manually modify files and make the incr
 - [Electron](https://www.electronjs.org/)
 - [JQuery](https://jquery.com)
 - [frag-finder](https://github.com/HenB13/frag-finder)
+- [cs-demo-analyzer](https://github.com/akiver/cs-demo-analyzer)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -122,21 +122,6 @@ Explanation taken from [henb13/frag-finder](https://github.com/HenB13/frag-finde
 
 To get the program up and running follow these simple steps.
 
-### Prerequisites
-
-- CSGO Demos Manager
-
-```
-1. Go to Settings.
-2. Add a Folder where your demos are located from within the Folders tab.
-3. Go back to the homescreen.
-4. Select your folder path from within the list navigation.
-5. Select the demos you want to analyze.
-6. Analyze the demo(s).
-7. Right click and select "Export JSON".
-8. Specify the filepath you want to use to save the JSON files.
-```
-
 ### Installation
 
 1. Download the latest "Fragfinder-Setup-x.x.x.exe" via [Fragfinder-GUI/releases](https://github.com/Arad119/Fragfinder-GUI/releases).
@@ -145,10 +130,10 @@ To get the program up and running follow these simple steps.
 
 ### How To Use
 
-1. Select the folder which your JSON files are located.
+1. Select the folder which your demo files are located.
 2. **Optional: Specify a STEAMID64 to only export their highlights - If no STEAMID64 is specified, all highlights will be exported.**
 3. Process Demos.
-4. Let the program process all of the json files, length can vary depending on how many demos there are.
+4. Let the program process all of the demos, length can vary depending on how many demos there are.
 5. Specify a filepath for where the highlights.txt file should be saved.
 6. Find your highlights.txt file at the filepath you decided to save it.
 
@@ -163,7 +148,8 @@ To get the program up and running follow these simple steps.
 - [x] See progress of demo processing
 - [x] Auto-updater/Update notification
 - [x] Better UI
-- [ ] Create highlights file without prerequisites - Skip the need for CSGO Demos Manager
+- [x] Create highlights file without prerequisites - Skip the need for CSGO Demos Manager
+- [x] Support for both CS2 and CSGO demos
 
 See the [open issues](https://github.com/Arad119/Fragfinder-GUI/issues) for a full list of proposed features (and known issues).
 

@@ -159,7 +159,7 @@ See the [open issues](https://github.com/Arad119/Fragfinder-GUI/issues) for a fu
 
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

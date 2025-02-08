@@ -12,6 +12,7 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
+[![Downloads][downloads-shield]][downloads-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
@@ -172,6 +173,8 @@ Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
 [forks-url]: https://github.com/Arad119/Fragfinder-GUI/network/members
 [stars-shield]: https://img.shields.io/github/stars/Arad119/Fragfinder-GUI.svg?style=for-the-badge
 [stars-url]: https://github.com/Arad119/Fragfinder-GUI/stargazers
+[downloads-shield]: https://img.shields.io/github/downloads/Arad119/Fragfinder-GUI/total.svg?style=for-the-badge&color=purple
+[downloads-url]: https://github.com/Arad119/Fragfinder-GUI/releases
 [issues-shield]: https://img.shields.io/github/issues/Arad119/Fragfinder-GUI.svg?style=for-the-badge
 [issues-url]: https://github.com/Arad119/Fragfinder-GUI/issues
 [license-shield]: https://img.shields.io/github/license/Arad119/Fragfinder-GUI.svg?style=for-the-badge

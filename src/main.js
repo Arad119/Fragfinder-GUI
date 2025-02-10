@@ -11,11 +11,15 @@ const path = require("path");
 const ProgressBar = require("electron-progressbar");
 const { autoUpdater } = require("electron-updater");
 const isDev = require("electron-is-dev");
-const {
-  analyzeDemo,
-  DemoSource,
-  ExportFormat,
-} = require("@akiver/cs-demo-analyzer");
+const { analyzeDemo, ExportFormat } = require(isDev
+  ? "@akiver/cs-demo-analyzer"
+  : path.join(
+      process.resourcesPath,
+      "app.asar.unpacked",
+      "node_modules",
+      "@akiver",
+      "cs-demo-analyzer"
+    ));
 const os = require("os");
 const tmpdir = os.tmpdir();
 

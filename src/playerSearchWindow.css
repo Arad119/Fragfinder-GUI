@@ -1,0 +1,183 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:root {
+  --scrollbar-bg: #1e293b;
+  --scrollbar-thumb: #334155;
+  --scrollbar-thumb-hover: #475569;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow-y: auto;
+  align-items: center;
+}
+
+.player-list {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+}
+
+/* Remove the overflow from player-list since we want the main container to scroll */
+.player-list {
+  flex: 0;
+  overflow: visible;
+}
+
+/* Keep only the main window scrollbar */
+body {
+  overflow: hidden;
+}
+
+/* Update player item styles to prevent individual scrolling */
+.player-item {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  width: 500px;
+  max-width: 90%;
+  margin: 0 auto;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.player-item.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Add scrollbar styles only to the search-container */
+.search-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+.search-container::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+  border-radius: 6px;
+}
+
+.search-container::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border: 3px solid var(--scrollbar-bg);
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.search-container::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+.player-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 0.75rem;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.player-image[src*="cloudinary"] {
+  opacity: 1;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.player-name {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-realname {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination-btn {
+  padding: 0.5rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-info {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.top-pagination {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.missing-player-text {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.missing-player-text a {
+  color: #6366f1;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.missing-player-text a:hover {
+  color: #818cf8;
+}

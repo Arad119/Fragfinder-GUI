@@ -1,26 +1,19 @@
 <div id="top"></div>
 
 <!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Downloads][downloads-shield]][downloads-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![GPL-3.0 License][license-shield]][license-url]
 
 ---
 
 ## ⛔ THIS PROJECT IS NO LONGER IN ACTIVE DEVELOPMENT ⛔
 
-Not really sure how much I'll be contibuting to this software in the future, as of now it works as intended with both CS2 and CSGO demos. ✌️
+The project is feature complete and works as intended with both CS2 and CSGO demos. Feel free to use it, but as of now, no new features will be added. ✌️
 
 ---
 
@@ -34,7 +27,7 @@ Not really sure how much I'll be contibuting to this software in the future, as 
 <h3 align="center">Fragfinder-GUI</h3>
 
   <p align="center">
-    Built upon <a href="https://github.com/HenB13/frag-finder">henb13/frag-finder</a> with an added GUI, generate highlight timestamps and filter out specific player highlights. More to come!
+    A modern GUI application for analyzing CS2 and CSGO demo files to generate highlight timestamps. Built upon <a href="https://github.com/HenB13/frag-finder">henb13/frag-finder</a>.
   </p>
 </div>
 
@@ -46,6 +39,7 @@ Not really sure how much I'll be contibuting to this software in the future, as 
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#features">Features</a></li>
         <li><a href="#example-output-with-explanation">Example Output With Explanation</a></li>
       </ul>
     </li>
@@ -56,6 +50,7 @@ Not really sure how much I'll be contibuting to this software in the future, as 
         <li><a href="#how-to-use">How To Use</a></li>
       </ul>
     </li>
+    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#license">License</a></li>
   </ol>
@@ -67,20 +62,26 @@ Not really sure how much I'll be contibuting to this software in the future, as 
 
 ![FragFinder-GUI Screenshot][product-screenshot]
 
-The project was made to skip the need to manually modify files and make the incredible [henb13/frag-finder](https://github.com/HenB13/frag-finder) even better with an added GUI. Uses JSON files created with CSGO Demo Manager to generate readable highlight timestamps, also able to filter out specific player highlights.
+Fragfinder-GUI is a modern desktop application that analyzes CS2 and CSGO demo files to automatically generate highlight timestamps. It features a modern interface for processing demos and filtering highlights by specific players.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+![Pro Player Search][player-search-screenshot]
+The built-in pro player search feature allows you to easily find and select professional players' Steam IDs without having to look them up manually.
 
 ### Built With
 
 - [Electron](https://www.electronjs.org/)
-- [JQuery](https://jquery.com)
 - [frag-finder](https://github.com/HenB13/frag-finder)
 - [cs-demo-analyzer](https://github.com/akiver/cs-demo-analyzer)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+### Features
 
-<!-- OUTPUT EXAMPLE -->
+- 🎮 Support for both CS2 and CSGO demos
+- 🔍 Built-in pro player search with Steam ID lookup
+- 🎯 Filter highlights by specific player using Steam ID
+- 👀 Preview mode to view the results in a window instead of saving to a text file
+- 🔄 Automatic updates
+- 🎨 Modern dark theme UI
+- 📁 File saving selection
 
 ### Example Output With Explanation
 
@@ -115,28 +116,73 @@ The project was made to skip the need to manually modify files and make the incr
 
 Explanation taken from [henb13/frag-finder](https://github.com/HenB13/frag-finder).
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- GETTING STARTED -->
-
 ## Getting Started
-
-To get the program up and running follow these simple steps.
 
 ### Installation
 
-1. Download the latest "Fragfinder-Setup-x.x.x.exe" via [Fragfinder-GUI/releases](https://github.com/Arad119/Fragfinder-GUI/releases).
-2. Run "Fragfinder Setup.exe".
-3. Select your installation path.
+1. Download the latest "Fragfinder-Setup-x.x.x.exe" from [Releases](https://github.com/Arad119/Fragfinder-GUI/releases)
+2. Run the installer
+3. Choose your installation location
 
 ### How To Use
 
-1. Select the folder which your demo files are located.
-2. **Optional: Specify a STEAMID64 to only export their highlights - If no STEAMID64 is specified, all highlights will be exported.**
-3. Process Demos.
-4. Let the program process all of the demos, length can vary depending on how many demos there are.
-5. Specify a filepath for where the highlights.txt file should be saved.
-6. Find your highlights.txt file at the filepath you decided to save it.
+1. Select your demos folder
+2. Optional: Use the pro player search or enter a Steam ID to filter highlights for a specific player
+3. Optional: Enable "Preview highlights" checkbox to view the results in a window instead of saving to a text file
+4. Click "Process Demos"
+5. Wait for processing to complete
+6. Based on your choice in step 3:
+   - If preview mode is off: Choose where to save your highlights.txt file
+   - If preview mode is on: View your highlights in a preview window
+
+## Contributing
+
+The player database used for the pro player search feature is maintained in a separate branch (`gh-pages`) that serves as a CDN for the application. To contribute new players:
+
+#### Player Eligibility
+
+Players must meet ALL of the following criteria:
+
+- Have an active HLTV profile
+- Have a Liquipedia page with verified Steam ID
+- Be a current or former professional CS:GO/CS2 player
+
+These requirements ensure data reliability and verification of player information.
+
+#### How to Contribute
+
+1. Fork the repository
+2. Switch to the `gh-pages` branch
+3. Create a new branch: `git checkout -b add-player-[playername]`
+4. Add required files:
+   - Player image: `assets/playerImages/[playername].png`
+   - Update `assets/data/players.json`:
+     ```json
+     {
+       "name": "playername",
+       "realName": "Player Full Name",
+       "steamId": "765xxxxxxxxxx",
+       "image": "playername.png"
+     }
+     ```
+5. Create a pull request with:
+   - Title: `Add player: [playername]`
+   - Description including:
+     - HLTV profile link (source of image)
+     - Liquipedia page (source of Steam ID)
+
+#### Image Requirements
+
+- Must be unmodified from HLTV source
+- Must be converted to a .png format
+- Named exactly as referenced in players.json
+
+#### Data Sources & Attribution
+
+- Player images are sourced from [HLTV.org](https://www.hltv.org)
+- Steam IDs are verified through [Liquipedia](https://liquipedia.net/counterstrike/)
+
+For more detailed contribution guidelines, please visit the [gh-pages branch](https://github.com/Arad119/Fragfinder-GUI/tree/gh-pages).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -152,20 +198,19 @@ To get the program up and running follow these simple steps.
 - [x] Create highlights file without prerequisites - Skip the need for CSGO Demos Manager
 - [x] Support for both CS2 and CSGO demos
 
-See the [open issues](https://github.com/Arad119/Fragfinder-GUI/issues) for a full list of proposed features (and known issues).
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- LICENSE -->
 
 ## License
 
-Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
+Distributed under the GPL-3.0 License. See `LICENSE.txt` for more information.
+
+Player images are property of [HLTV.org](https://www.hltv.org)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [contributors-shield]: https://img.shields.io/github/contributors/Arad119/Fragfinder-GUI.svg?style=for-the-badge
 [contributors-url]: https://github.com/Arad119/Fragfinder-GUI/graphs/contributors
@@ -180,3 +225,4 @@ Distributed under the GPLv3 License. See `LICENSE.txt` for more information.
 [license-shield]: https://img.shields.io/github/license/Arad119/Fragfinder-GUI.svg?style=for-the-badge
 [license-url]: https://github.com/Arad119/Fragfinder-GUI/blob/master/LICENSE.txt
 [product-screenshot]: images/Program.png
+[player-search-screenshot]: images/Player-Search.png

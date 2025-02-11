@@ -1,0 +1,51 @@
+:root {
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --text: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border: #334155;
+  --scrollbar-bg: #1e293b;
+  --scrollbar-thumb: #334155;
+  --scrollbar-thumb-hover: #475569;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  padding: 2rem;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  color: white;
+  font-family: "Fira Code", monospace;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  max-height: 80vh;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Modern scrollbar styling */
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+  border-radius: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border: 3px solid var(--scrollbar-bg);
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}

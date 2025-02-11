@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "Arad119",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "config": {
     "forge": {
       "packagerConfig": {
@@ -45,16 +45,16 @@
     "@akiver/cs-demo-analyzer": "^1.5.2",
     "electron-is-dev": "^2.0.0",
     "electron-progressbar": "^2.0.1",
-    "electron-updater": "^4.6.5"
+    "electron-updater": "^6.1.8"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.61",
-    "@electron-forge/maker-deb": "^6.0.0-beta.61",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.61",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
-    "@electron-forge/maker-zip": "^6.0.0-beta.61",
-    "electron": "^16.1.1",
-    "electron-builder": "^22.14.13"
+    "@electron-forge/cli": "^7.3.0",
+    "@electron-forge/maker-deb": "^7.3.0",
+    "@electron-forge/maker-rpm": "^7.3.0",
+    "@electron-forge/maker-squirrel": "^7.3.0",
+    "@electron-forge/maker-zip": "^7.3.0",
+    "electron": "^29.1.4",
+    "electron-builder": "^24.13.3"
   },
   "build": {
     "publish": [
@@ -77,6 +77,12 @@
       "uninstallerIcon": "images/logo.ico",
       "uninstallDisplayName": "Fragfinder Uninstaller",
       "allowToChangeInstallationDirectory": true
-    }
+    },
+    "extraFiles": [
+      {
+        "from": "node_modules/@akiver/cs-demo-analyzer/dist/bin/windows-x64/csda.exe",
+        "to": "resources/csda.exe"
+      }
+    ]
   }
 }

@@ -7,25 +7,37 @@
   </head>
 
   <body>
-    <h1>Fragfinder</h1>
+    <div class="container">
+      <h1>Fragfinder</h1>
 
-    <input
-      id="folder-path"
-      class="longer"
-      type="text"
-      placeholder="Folder Location"
-      readonly
-    />
-    <button type="button" id="dirs">Select Folder</button>
-    <br />
-    <br />
-    <input
-      id="steamid"
-      type="text"
-      placeholder="Steam64 ID (e.g. 76561198341681653)"
-    />
+      <div class="input-group">
+        <input
+          id="folder-path"
+          class="longer"
+          type="text"
+          placeholder="Folder Location"
+          readonly
+        />
+        <button type="button" id="dirs">Select Folder</button>
+      </div>
 
-    <button id="btn" type="button">Process Demos</button>
+      <input
+        id="steamid"
+        type="text"
+        placeholder="Steam64 ID (e.g. 76561198341681653)"
+      />
+
+      <button id="search-player" type="button">Search Pro Player</button>
+
+      <div class="checkbox-container">
+        <input type="checkbox" id="preview-mode" name="preview-mode" />
+        <label for="preview-mode"
+          >Preview highlights instead of saving text file</label
+        >
+      </div>
+
+      <button id="btn" type="button">Process Demos</button>
+    </div>
 
     <div id="version-label"></div>
 

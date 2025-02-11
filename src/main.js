@@ -5,23 +5,26 @@ const {
   dialog,
   ipcMain,
   globalShortcut,
+  nativeTheme,
 } = require("electron");
-const electron = require("electron");
+
+nativeTheme.themeSource = "dark";
+
 const path = require("path");
 const ProgressBar = require("electron-progressbar");
 const { autoUpdater } = require("electron-updater");
 const isDev = require("electron-is-dev");
-const { analyzeDemo, ExportFormat } = require(isDev
-  ? "@akiver/cs-demo-analyzer"
-  : path.join(
-      process.resourcesPath,
-      "app.asar.unpacked",
-      "node_modules",
-      "@akiver",
-      "cs-demo-analyzer"
-    ));
+const { analyzeDemo, ExportFormat } = require("@akiver/cs-demo-analyzer");
+const analyzeBinaryPath = isDev
+  ? undefined // Use default path in dev mode
+  : path.join(process.resourcesPath, "csda.exe");
 const os = require("os");
 const tmpdir = os.tmpdir();
+const createPreviewWindow = require("./previewWindow");
+const createCustomModal = require("./customModal");
+const createPlayerSearchWindow = require("./playerSearchWindow");
+const fs = require("fs").promises;
+const settingsPath = path.join(app.getPath("userData"), "settings.json");
 
 /* Importing the ipcMain module from the electron module. */
 var ipc = require("electron").ipcMain;
@@ -49,7 +52,6 @@ const createWindow = () => {
     webPreferences: {
       preload: __dirname + "/preload.js",
       nodeIntegration: true,
-      enableRemoteModule: true,
       contextIsolation: true,
     },
   });
@@ -104,7 +106,7 @@ ipcMain.on("select-dirs", async (event, arg) => {
 
 /* Set steamid64 to the steamid that the user inputs.
  * Processes highlights data and exports them. */
-ipcMain.on("setSteamId", (event, steamid) => {
+ipcMain.on("setSteamId", (event, { steamid, previewMode }) => {
   const fs = require("fs").promises;
   const path = require("path");
   const CSGO_ROUND_LENGTH = 115;
@@ -123,6 +125,7 @@ ipcMain.on("setSteamId", (event, steamid) => {
       minify: false,
       onStderr: console.error,
       onStdout: console.log,
+      executablePath: analyzeBinaryPath,
     });
 
     const jsonFileName = path.basename(demoPath, ".dem") + ".json";
@@ -159,14 +162,11 @@ ipcMain.on("setSteamId", (event, steamid) => {
 
     if (demoFiles.length === 0) {
       msgBox = `There are no ".dem" files to process!`;
-      const options = {
-        type: "none",
-        buttons: [],
-        defaultId: 0,
+      createCustomModal({
         title: "File creation",
         message: msgBox,
-      };
-      dialog.showMessageBox(null, options);
+        buttons: ["Ok"],
+      });
       return;
     }
 
@@ -175,6 +175,28 @@ ipcMain.on("setSteamId", (event, steamid) => {
       text: "Preparing frags...",
       detail: "Processing demos...",
       maxValue: demoFiles.length,
+      customHTML: `
+        <div style="font-family: 'Inter', sans-serif; background: #0f172a; position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 2rem;">
+          <div style="text-align: center; margin-bottom: 1.5rem;">
+            <h3 style="color: #f8fafc; font-size: 1.25rem; font-weight: 600; margin: 0;">Preparing frags...</h3>
+            <p style="color: #94a3b8; font-size: 0.875rem; margin: 0.5rem 0 0 0;" id="progress-detail">Processing demos...</p>
+          </div>
+          <div style="background: #1e293b; border: 1px solid #334155; border-radius: 0.5rem; padding: 0.25rem; margin-top: 1rem;">
+            <div id="progress-bar" style="background: #6366f1; width: 0%; height: 0.5rem; border-radius: 0.25rem; transition: width 0.3s ease;"></div>
+          </div>
+          <script>
+            const progressBar = document.getElementById('progress-bar');
+            const progressDetail = document.getElementById('progress-detail');
+            const { ipcRenderer } = require('electron');
+            
+            window.setProgressValue = function(value) {
+              const percentage = (value / ${demoFiles.length}) * 100;
+              progressBar.style.width = percentage + '%';
+              progressDetail.textContent = 'Demo ' + value + ' out of ${demoFiles.length}...';
+            };
+          </script>
+        </div>
+      `,
     });
 
     /* Setting up event handlers for the progress bar. */
@@ -190,6 +212,9 @@ ipcMain.on("setSteamId", (event, steamid) => {
         progressBar.detail = `Demo ${value} out of ${
           progressBar.getOptions().maxValue
         }...`;
+        progressBar._window.webContents.executeJavaScript(
+          `window.setProgressValue(${value})`
+        );
       });
 
     /* Analyze each demo. */
@@ -392,7 +417,7 @@ ipcMain.on("setSteamId", (event, steamid) => {
   };
 
   /* Process highlights data and export. */
-  async function createFiles(data) {
+  async function createFiles(data, previewMode) {
     for (const match of data) {
       const matchText = [`**playdemo ${match.demoName}.dem`];
       const matchFragFormat = [];
@@ -520,20 +545,24 @@ ipcMain.on("setSteamId", (event, steamid) => {
       matchContent += matchText.join("") + "\n\n\n";
     }
 
-    /* Creating highlights file and saving it to the user's computer. */
-    const { filePath, canceled } = await dialog.showSaveDialog({
-      defaultPath: "highlights.txt",
-      filters: [{ name: "Text File", extensions: ["txt"] }],
-    });
-
-    if (filePath && !canceled) {
-      msgBox = "File has been created!";
-
-      fs.writeFile(filePath, matchContent, (err) => {
-        if (err) throw err;
-      });
+    if (previewMode) {
+      createPreviewWindow(matchContent);
     } else {
-      msgBox = "File creation cancelled!";
+      // Existing file save code
+      const { filePath, canceled } = await dialog.showSaveDialog({
+        defaultPath: "highlights.txt",
+        filters: [{ name: "Text File", extensions: ["txt"] }],
+      });
+
+      if (filePath && !canceled) {
+        msgBox = "File has been created!";
+
+        fs.writeFile(filePath, matchContent, (err) => {
+          if (err) throw err;
+        });
+      } else {
+        msgBox = "File creation cancelled!";
+      }
     }
   }
 
@@ -631,19 +660,16 @@ ipcMain.on("setSteamId", (event, steamid) => {
 
     try {
       const highlights = await getFrags(folderPath, steamid);
-      await createFiles(highlights);
-      console.log("files created!");
+      await createFiles(highlights, previewMode);
+      console.log("highlights processed!");
 
-      /* Creating file creation message box. */
-      const options = {
-        type: "none",
-        buttons: [],
-        defaultId: 0,
-        title: "File creation",
-        message: msgBox,
-      };
-
-      dialog.showMessageBox(null, options);
+      if (!previewMode) {
+        createCustomModal({
+          title: "File creation",
+          message: msgBox,
+          buttons: ["Ok"],
+        });
+      }
     } catch (e) {
       console.log("something went wrong:", e.message);
     }
@@ -655,29 +681,59 @@ ipcMain.on("setSteamId", (event, steamid) => {
 
 /* Showing dialog box when an update is available. */
 autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-    type: "info",
-    buttons: ["Ok"],
+  createCustomModal({
     title: "Application Update",
     message: process.platform === "win32" ? releaseNotes : releaseName,
     detail:
       "A new version is being downloaded in the background and will automatically close the app when it's done.",
-  };
-  dialog.showMessageBox(dialogOpts, (response) => {});
+    buttons: ["Ok"],
+  });
 });
 
 /* Showing dialog box upon update error. */
 autoUpdater.on("error", (err) => {
-  const dialogOpts = {
-    type: "info",
-    buttons: ["Ok"],
+  createCustomModal({
     title: "Error when auto-updating",
     message: err,
-  };
-  dialog.showMessageBox(dialogOpts, (response) => {});
+    buttons: ["Ok"],
+  });
 });
 
 /* Autoquit app on update completion. */
 autoUpdater.on("update-downloaded", (info) => {
   autoUpdater.quitAndInstall();
+});
+
+/* Add these IPC handlers after the existing ones */
+ipcMain.on("open-player-search", () => {
+  const searchWindow = createPlayerSearchWindow(mainWindow);
+});
+
+ipcMain.on("player-selected", (event, steamId) => {
+  mainWindow.webContents.send("player-selected", steamId);
+  BrowserWindow.getFocusedWindow().close();
+});
+
+// Add this with the other IPC handlers
+ipcMain.on("show-error-modal", (event, options) => {
+  createCustomModal(options);
+});
+
+// Add these IPC handlers
+ipcMain.on("save-settings", async (event, settings) => {
+  try {
+    await fs.writeFile(settingsPath, JSON.stringify(settings, null, 2));
+  } catch (error) {
+    console.error("Error saving settings:", error);
+  }
+});
+
+ipcMain.handle("load-settings", async () => {
+  try {
+    const data = await fs.readFile(settingsPath, "utf8");
+    return JSON.parse(data);
+  } catch (error) {
+    // Return default settings if file doesn't exist
+    return { previewMode: false };
+  }
 });

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Player Search</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="search-container">
+      <input
+        type="text"
+        id="search"
+        placeholder="Search for a player..."
+        autofocus
+      />
+      <div class="pagination top-pagination">
+        <button id="prevPageTop" class="pagination-btn" disabled>
+          Previous
+        </button>
+        <span id="pageInfoTop" class="page-info">Page 1</span>
+        <button id="nextPageTop" class="pagination-btn">Next</button>
+      </div>
+      <div class="player-list" id="playerList"></div>
+      <div class="pagination">
+        <button id="prevPage" class="pagination-btn" disabled>Previous</button>
+        <span id="pageInfo" class="page-info">Page 1</span>
+        <button id="nextPage" class="pagination-btn">Next</button>
+      </div>
+      <div class="missing-player-text">
+        Missing a player? Check out the
+        <a href="javascript:void(0)" onclick="openContributionGuide(event)">
+          contribution guide
+        </a>
+        to learn how to add them.
+      </div>
+    </div>
+    <script>
+      const { ipcRenderer } = require("electron");
+      const fs = require("fs").promises;
+      const path = require("path");
+      const basePath = "BASE_PATH_PLACEHOLDER";
+      const { shell } = require("electron");
+
+      const searchInput = document.getElementById("search");
+      const playerList = document.getElementById("playerList");
+      const prevPageBtn = document.getElementById("prevPage");
+      const nextPageBtn = document.getElementById("nextPage");
+      const pageInfo = document.getElementById("pageInfo");
+      const prevPageBtnTop = document.getElementById("prevPageTop");
+      const nextPageBtnTop = document.getElementById("nextPageTop");
+      const pageInfoTop = document.getElementById("pageInfoTop");
+
+      const PLAYERS_PER_PAGE = 20;
+      let currentPage = 1;
+      let filteredPlayers = [];
+      let playersData = { players: [] };
+
+      const userDataPath = "USER_DATA_PATH_PLACEHOLDER";
+      const CACHE_FILE = path.join(userDataPath, "player-cache.json");
+
+      const CACHE_DURATION = 12 * 60 * 60 * 1000; // 12 hours
+      const GH_PAGES_URL =
+        "https://cdn.jsdelivr.net/gh/arad119/Fragfinder-GUI@gh-pages";
+
+      // Fetch players data from CDN
+      async function fetchPlayersData() {
+        try {
+          // Check cache first
+          try {
+            const cacheData = await fs.readFile(CACHE_FILE, "utf8");
+            const { timestamp, data } = JSON.parse(cacheData);
+            if (Date.now() - timestamp < CACHE_DURATION) {
+              playersData = data;
+              renderPlayers();
+              return;
+            }
+          } catch (cacheError) {
+            console.log("No cache found or cache invalid");
+          }
+
+          console.log(
+            "Fetching from:",
+            `${GH_PAGES_URL}/assets/data/players.json`
+          );
+
+          // Fetch from GitHub Pages
+          const response = await fetch(
+            `${GH_PAGES_URL}/assets/data/players.json`
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const text = await response.text();
+          playersData = JSON.parse(text);
+
+          // Update cache
+          await fs.writeFile(
+            CACHE_FILE,
+            JSON.stringify({
+              timestamp: Date.now(),
+              data: playersData,
+            })
+          );
+
+          renderPlayers();
+        } catch (error) {
+          console.error("Error fetching players data:", error);
+
+          // Try to use cached data if available
+          try {
+            const cacheData = await fs.readFile(CACHE_FILE, "utf8");
+            const { data } = JSON.parse(cacheData);
+            console.log("Falling back to cached data");
+            playersData = data;
+            renderPlayers();
+          } catch (cacheError) {
+            console.error("No cache available:", cacheError);
+            ipcRenderer.send("show-error-modal", {
+              title: "Error",
+              message: `Failed to fetch player data: ${error.message}`,
+              buttons: ["Ok"],
+            });
+          }
+        }
+      }
+
+      function renderPlayers(searchTerm = "") {
+        filteredPlayers = playersData.players
+          .filter((player) =>
+            player.name.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+          .sort((a, b) => a.name.localeCompare(b.name));
+
+        const totalPages = Math.ceil(filteredPlayers.length / PLAYERS_PER_PAGE);
+        currentPage = Math.min(currentPage, totalPages);
+
+        const startIndex = (currentPage - 1) * PLAYERS_PER_PAGE;
+        const endIndex = startIndex + PLAYERS_PER_PAGE;
+        const playersToShow = filteredPlayers.slice(startIndex, endIndex);
+
+        playerList.innerHTML = playersToShow
+          .map(
+            (player) => `
+          <div class="player-item" onclick="selectPlayer('${player.steamId}')">
+            <img 
+              src="file://${basePath}/player_silhouette.png"
+              data-cdn="${GH_PAGES_URL}/assets/playerImages/${player.image}?v=1"
+              class="player-image"
+              onload="this.style.opacity = '1'"
+            />
+            <div class="player-info">
+              <span class="player-name">${player.name}</span>
+              <span class="player-realname">${player.realName || ""}</span>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+
+        // Add scroll observer for animations
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("fade-in");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            root: document.querySelector(".search-container"),
+            threshold: 0.1,
+            rootMargin: "20px",
+          }
+        );
+
+        // Observe all player items
+        document.querySelectorAll(".player-item").forEach((item) => {
+          observer.observe(item);
+        });
+
+        // After rendering, try to load CDN images
+        document.querySelectorAll(".player-image").forEach((img) => {
+          const cdnUrl = img.getAttribute("data-cdn");
+          const testImage = new Image();
+          testImage.onload = function () {
+            img.src = cdnUrl;
+          };
+          testImage.src = cdnUrl;
+        });
+
+        updatePaginationControls();
+      }
+
+      function updatePaginationControls() {
+        const totalPages = Math.ceil(filteredPlayers.length / PLAYERS_PER_PAGE);
+
+        // Update bottom pagination
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages;
+        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+
+        // Update top pagination
+        prevPageBtnTop.disabled = currentPage === 1;
+        nextPageBtnTop.disabled = currentPage === totalPages;
+        pageInfoTop.textContent = `Page ${currentPage} of ${totalPages}`;
+      }
+
+      function selectPlayer(steamId) {
+        ipcRenderer.send("player-selected", steamId);
+      }
+
+      searchInput.addEventListener("input", (e) => {
+        currentPage = 1;
+        renderPlayers(e.target.value);
+      });
+
+      prevPageBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderPlayers(searchInput.value);
+        }
+      });
+
+      nextPageBtn.addEventListener("click", () => {
+        const totalPages = Math.ceil(filteredPlayers.length / PLAYERS_PER_PAGE);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderPlayers(searchInput.value);
+        }
+      });
+
+      prevPageBtnTop.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderPlayers(searchInput.value);
+        }
+      });
+
+      nextPageBtnTop.addEventListener("click", () => {
+        const totalPages = Math.ceil(filteredPlayers.length / PLAYERS_PER_PAGE);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderPlayers(searchInput.value);
+        }
+      });
+
+      function openContributionGuide(event) {
+        event.preventDefault();
+        shell.openExternal(
+          "https://github.com/Arad119/Fragfinder-GUI/tree/gh-pages"
+        );
+      }
+
+      // Initial fetch of players data
+      fetchPlayersData();
+    </script>
+  </body>
+</html>

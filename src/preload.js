@@ -18,6 +18,12 @@ contextBridge.exposeInMainWorld("electronAPI", {
   // Allow renderer to receive folder path updates
   filePathInput: (callback) => ipcRenderer.on("updatefileLoc", callback),
   // Allow renderer to trigger demo processing with Steam ID
-  processDemos: (steamid) => ipcRenderer.send("setSteamId", steamid),
+  processDemos: (data) => ipcRenderer.send("setSteamId", data),
   getVersion: () => version,
+  openPlayerSearch: () => ipcRenderer.send("open-player-search"),
+  onPlayerSelected: (callback) => ipcRenderer.on("player-selected", callback),
+  showErrorModal: (options) => ipcRenderer.send("show-error-modal", options),
+  // Add new functions for settings
+  saveSettings: (settings) => ipcRenderer.send("save-settings", settings),
+  loadSettings: () => ipcRenderer.invoke("load-settings"),
 });

@@ -2,6 +2,22 @@
 
 This repository contains static assets used by the Fragfinder application.
 
+## Requirements
+
+### Player Eligibility
+Players must meet the following criteria to be added to the database:
+- Must have an active HLTV profile
+- Must have a Liquipedia page with verified Steam ID
+- Must be a current or former professional CS:GO/CS2 player
+
+These requirements ensure:
+1. Accurate player information verification
+2. Legitimate Steam ID confirmation
+3. Consistent image quality standards
+4. Professional player database integrity
+
+Players without both HLTV and Liquipedia presence cannot be added to maintain data reliability.
+
 ## Data Sources
 
 ### Player Data

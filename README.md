@@ -16,7 +16,19 @@ The player data includes information about professional CS:GO/CS2 players:
 - Steam IDs are collected from [Liquipedia](https://liquipedia.net/counterstrike/)
 
 ## Cache Policy
-The Fragfinder application caches player data for 12 hours to reduce API calls and improve performance.
+The Fragfinder application uses two levels of caching:
+
+1. **Player Data**: 
+   - Cached locally for 12 hours
+   - Located in user's app data directory
+   - Reduces API calls to the CDN
+
+2. **Player Images**:
+   - Served through jsDelivr CDN
+   - Global CDN distribution with automatic caching
+   - Cache duration: 7 days
+
+This dual caching strategy ensures fast loading times and reduced bandwidth usage while keeping player data up to date.
 
 ## Contributing
 

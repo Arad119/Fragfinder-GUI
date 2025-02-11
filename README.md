@@ -43,6 +43,7 @@ To add or update player data:
 
 Please ensure images are:
 - Unmodified from the original source
+- In a .png file format
 - Named exactly as referenced in players.json
 
 ## License

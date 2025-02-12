@@ -11,8 +11,6 @@
 
 ---
 
-## ⛔ THIS PROJECT IS NO LONGER IN ACTIVE DEVELOPMENT ⛔
-
 The project is feature complete and works as intended with both CS2 and CSGO demos. Feel free to use it, but as of now, no new features will be added. ✌️
 
 ---
@@ -65,6 +63,7 @@ The project is feature complete and works as intended with both CS2 and CSGO dem
 Fragfinder-GUI is a modern desktop application that analyzes CS2 and CSGO demo files to automatically generate highlight timestamps. It features a modern interface for processing demos and filtering highlights by specific players.
 
 ![Pro Player Search][player-search-screenshot]
+
 The built-in pro player search feature allows you to easily find and select professional players' Steam IDs without having to look them up manually.
 
 ### Built With

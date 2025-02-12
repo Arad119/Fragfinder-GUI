@@ -680,11 +680,10 @@ ipcMain.on("setSteamId", (event, { steamid, previewMode }) => {
 });
 
 /* Showing dialog box when an update is available. */
-autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
+autoUpdater.on("update-available", () => {
   createCustomModal({
     title: "Application Update",
-    message: process.platform === "win32" ? releaseNotes : releaseName,
-    detail:
+    message:
       "A new version is being downloaded in the background and will automatically close the app when it's done.",
     buttons: ["Ok"],
   });

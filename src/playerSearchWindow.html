@@ -82,12 +82,12 @@
 
           console.log(
             "Fetching from:",
-            `${GH_PAGES_URL}/assets/data/players.json`
+            `${GH_PAGES_URL}/assets/data/players.json?v=1`
           );
 
           // Fetch from GitHub Pages
           const response = await fetch(
-            `${GH_PAGES_URL}/assets/data/players.json`
+            `${GH_PAGES_URL}/assets/data/players.json?v=1`
           );
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

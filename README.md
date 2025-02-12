@@ -106,15 +106,6 @@ node jsonValidator.js
 
 - If valid, you'll see:
 
-The validator checks for:
-
-- Valid JSON structure
-- Duplicate player names
-- Duplicate Steam IDs
-- Valid Steam ID format (must be a 17-digit number)
-
-Example validation output if no errors:
-
 ```json
 {
   "valid": true,
@@ -143,6 +134,14 @@ If validation fails, you'll receive detailed error information:
   ]
 }
 ```
+
+The validator checks for:
+
+- Valid JSON structure
+- Duplicate player names
+- Duplicate Steam IDs
+- Valid Steam ID format (must be a 17-digit number)
+
 
 Fix any validation errors before submitting your pull request.
 

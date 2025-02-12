@@ -11,8 +11,6 @@
 
 ---
 
-## ⛔ THIS PROJECT IS NO LONGER IN ACTIVE DEVELOPMENT ⛔
-
 The project is feature complete and works as intended with both CS2 and CSGO demos. Feel free to use it, but as of now, no new features will be added. ✌️
 
 ---

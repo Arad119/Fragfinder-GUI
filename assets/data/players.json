@@ -2771,6 +2771,54 @@
       "realName": "Hannes Johansson",
       "steamId": "76561198153092130",
       "image": "hns.png"
+    },
+    {
+      "name": "abdi",
+      "realName": "Ahmed Abdi",
+      "steamId": "76561197991446045",
+      "image": "abdi.png"
+    },
+    {
+      "name": "kreaz",
+      "realName": "Rasmus Johansson",
+      "steamId": "76561198077245619",
+      "image": "kreaz.png"
+    },
+    {
+      "name": "Calyx",
+      "realName": "Buğra Arkın",
+      "steamId": "76561198052546265",
+      "image": "Calyx.png"
+    },
+    {
+      "name": "Blytz",
+      "realName": "Raul Gligor",
+      "steamId": "76561198062114681",
+      "image": "Blytz.png"
+    },
+    {
+      "name": "bnox",
+      "realName": "Bartosz Niebisz",
+      "steamId": "76561198360682773",
+      "image": "bnox.png"
+    },
+    {
+      "name": "danistzz",
+      "realName": "Danil Roslyakov",
+      "steamId": "76561198217764976",
+      "image": "danistzz.png"
+    },
+    {
+      "name": "afro",
+      "realName": "Aurélien Drapier",
+      "steamId": "76561198035581101",
+      "image": "afro.png"
+    },
+    {
+      "name": "aliStair",
+      "realName": "Alistair Johnston",
+      "steamId": "76561198098346710",
+      "image": "aliStair.png"
     }
   ]
 }

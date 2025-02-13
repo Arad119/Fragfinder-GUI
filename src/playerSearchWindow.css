@@ -63,6 +63,10 @@ body {
   will-change: transform, opacity;
 }
 
+.player-item:hover {
+  border-color: #6366f1;
+}
+
 .player-item.fade-in {
   animation: fadeIn 0.3s ease forwards;
 }
@@ -180,4 +184,50 @@ body {
 
 .missing-player-text a:hover {
   color: #818cf8;
+}
+
+.player-name-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fi {
+  width: 1.5em;
+  line-height: 1;
+  border-radius: 0.125rem;
+  flex-shrink: 0;
+}
+
+.filter-container {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+#countryFilter {
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+#countryFilter:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+#countryFilter option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+#search {
+  flex: 1;
 }

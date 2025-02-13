@@ -38,6 +38,7 @@ ipc.on("close-main-window", function () {
 let mainWindow;
 let folderPath;
 let matchContent = "";
+let playerSearchWindow = null;
 
 /**
  * Create a new BrowserWindow and defining settings for
@@ -705,7 +706,17 @@ autoUpdater.on("update-downloaded", (info) => {
 
 /* Add these IPC handlers after the existing ones */
 ipcMain.on("open-player-search", () => {
-  const searchWindow = createPlayerSearchWindow(mainWindow);
+  if (playerSearchWindow) {
+    // If window exists, focus it instead of creating a new one
+    playerSearchWindow.focus();
+    return;
+  }
+  playerSearchWindow = createPlayerSearchWindow(mainWindow);
+
+  // Clear the reference when window is closed
+  playerSearchWindow.on("closed", () => {
+    playerSearchWindow = null;
+  });
 });
 
 ipcMain.on("player-selected", (event, steamId) => {

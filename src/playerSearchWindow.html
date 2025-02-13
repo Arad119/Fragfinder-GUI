@@ -6,15 +6,24 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"
+    />
   </head>
   <body>
     <div class="search-container">
-      <input
-        type="text"
-        id="search"
-        placeholder="Search for a player..."
-        autofocus
-      />
+      <div class="filter-container">
+        <input
+          type="text"
+          id="search"
+          placeholder="Search for a player..."
+          autofocus
+        />
+        <select id="countryFilter">
+          <option value="">All Countries</option>
+        </select>
+      </div>
       <div class="pagination top-pagination">
         <button id="prevPageTop" class="pagination-btn" disabled>
           Previous
@@ -51,11 +60,286 @@
       const prevPageBtnTop = document.getElementById("prevPageTop");
       const nextPageBtnTop = document.getElementById("nextPageTop");
       const pageInfoTop = document.getElementById("pageInfoTop");
+      const countryFilter = document.getElementById("countryFilter");
 
       const PLAYERS_PER_PAGE = 20;
       let currentPage = 1;
       let filteredPlayers = [];
       let playersData = { players: [] };
+
+      const countryFlags = {
+        Afghanistan: "af",
+        "Aland Islands": "ax",
+        Albania: "al",
+        Algeria: "dz",
+        "American Samoa": "as",
+        Andorra: "ad",
+        Angola: "ao",
+        Anguilla: "ai",
+        Antarctica: "aq",
+        "Antigua and Barbuda": "ag",
+        Argentina: "ar",
+        Armenia: "am",
+        Aruba: "aw",
+        "Ascension Island": "sh-ac",
+        "Association of Southeast Asian Nations": "asean",
+        Australia: "au",
+        Austria: "at",
+        Azerbaijan: "az",
+        Bahamas: "bs",
+        Bahrain: "bh",
+        Bangladesh: "bd",
+        Barbados: "bb",
+        "Basque Country": "es-pv",
+        Belarus: "by",
+        Belgium: "be",
+        Belize: "bz",
+        Benin: "bj",
+        Bermuda: "bm",
+        Bhutan: "bt",
+        Bolivia: "bo",
+        "Bonaire, Sint Eustatius and Saba": "bq",
+        "Bosnia and Herzegovina": "ba",
+        Botswana: "bw",
+        "Bouvet Island": "bv",
+        Brazil: "br",
+        "British Indian Ocean Territory": "io",
+        "Brunei Darussalam": "bn",
+        Bulgaria: "bg",
+        "Burkina Faso": "bf",
+        Burundi: "bi",
+        "Cabo Verde": "cv",
+        Cambodia: "kh",
+        Cameroon: "cm",
+        Canada: "ca",
+        "Canary Islands": "ic",
+        Catalonia: "es-ct",
+        "Cayman Islands": "ky",
+        "Central African Republic": "cf",
+        "Central European Free Trade Agreement": "cefta",
+        Chad: "td",
+        Chile: "cl",
+        China: "cn",
+        "Christmas Island": "cx",
+        "Clipperton Island": "cp",
+        "Cocos (Keeling) Islands": "cc",
+        Colombia: "co",
+        Comoros: "km",
+        "Cook Islands": "ck",
+        "Costa Rica": "cr",
+        Croatia: "hr",
+        Cuba: "cu",
+        Curaçao: "cw",
+        Cyprus: "cy",
+        "Czech Republic": "cz",
+        "Côte d'Ivoire": "ci",
+        "Democratic Republic of the Congo": "cd",
+        Denmark: "dk",
+        "Diego Garcia": "dg",
+        Djibouti: "dj",
+        Dominica: "dm",
+        "Dominican Republic": "do",
+        "East African Community": "eac",
+        Ecuador: "ec",
+        Egypt: "eg",
+        "El Salvador": "sv",
+        England: "gb-eng",
+        "Equatorial Guinea": "gq",
+        Eritrea: "er",
+        Estonia: "ee",
+        Eswatini: "sz",
+        Ethiopia: "et",
+        Europe: "eu",
+        "Falkland Islands": "fk",
+        "Faroe Islands": "fo",
+        "Federated States of Micronesia": "fm",
+        Fiji: "fj",
+        Finland: "fi",
+        France: "fr",
+        "French Guiana": "gf",
+        "French Polynesia": "pf",
+        "French Southern Territories": "tf",
+        Gabon: "ga",
+        Galicia: "es-ga",
+        Gambia: "gm",
+        Georgia: "ge",
+        Germany: "de",
+        Ghana: "gh",
+        Gibraltar: "gi",
+        Greece: "gr",
+        Greenland: "gl",
+        Grenada: "gd",
+        Guadeloupe: "gp",
+        Guam: "gu",
+        Guatemala: "gt",
+        Guernsey: "gg",
+        Guinea: "gn",
+        "Guinea-Bissau": "gw",
+        Guyana: "gy",
+        Haiti: "ht",
+        "Heard Island and McDonald Islands": "hm",
+        "Holy See": "va",
+        Honduras: "hn",
+        "Hong Kong": "hk",
+        Hungary: "hu",
+        Iceland: "is",
+        India: "in",
+        Indonesia: "id",
+        Iran: "ir",
+        Iraq: "iq",
+        Ireland: "ie",
+        "Isle of Man": "im",
+        Israel: "il",
+        Italy: "it",
+        Jamaica: "jm",
+        Japan: "jp",
+        Jersey: "je",
+        Jordan: "jo",
+        Kazakhstan: "kz",
+        Kenya: "ke",
+        Kiribati: "ki",
+        Kosovo: "xk",
+        Kuwait: "kw",
+        Kyrgyzstan: "kg",
+        Laos: "la",
+        Latvia: "lv",
+        "League of Arab States": "arab",
+        Lebanon: "lb",
+        Lesotho: "ls",
+        Liberia: "lr",
+        Libya: "ly",
+        Liechtenstein: "li",
+        Lithuania: "lt",
+        Luxembourg: "lu",
+        Macau: "mo",
+        Madagascar: "mg",
+        Malawi: "mw",
+        Malaysia: "my",
+        Maldives: "mv",
+        Mali: "ml",
+        Malta: "mt",
+        "Marshall Islands": "mh",
+        Martinique: "mq",
+        Mauritania: "mr",
+        Mauritius: "mu",
+        Mayotte: "yt",
+        Mexico: "mx",
+        Moldova: "md",
+        Monaco: "mc",
+        Mongolia: "mn",
+        Montenegro: "me",
+        Montserrat: "ms",
+        Morocco: "ma",
+        Mozambique: "mz",
+        Myanmar: "mm",
+        Namibia: "na",
+        Nauru: "nr",
+        Nepal: "np",
+        Netherlands: "nl",
+        "New Caledonia": "nc",
+        "New Zealand": "nz",
+        Nicaragua: "ni",
+        Niger: "ne",
+        Nigeria: "ng",
+        Niue: "nu",
+        "Norfolk Island": "nf",
+        "North Korea": "kp",
+        "North Macedonia": "mk",
+        "Northern Ireland": "gb-nir",
+        "Northern Mariana Islands": "mp",
+        Norway: "no",
+        Oman: "om",
+        "Pacific Community": "pc",
+        Pakistan: "pk",
+        Palau: "pw",
+        Panama: "pa",
+        "Papua New Guinea": "pg",
+        Paraguay: "py",
+        Peru: "pe",
+        Philippines: "ph",
+        Pitcairn: "pn",
+        Poland: "pl",
+        Portugal: "pt",
+        "Puerto Rico": "pr",
+        Qatar: "qa",
+        "Republic of the Congo": "cg",
+        Romania: "ro",
+        Russia: "ru",
+        Rwanda: "rw",
+        Réunion: "re",
+        "Saint Barthélemy": "bl",
+        "Saint Helena": "sh-hl",
+        "Saint Helena, Ascension and Tristan da Cunha": "sh",
+        "Saint Kitts and Nevis": "kn",
+        "Saint Lucia": "lc",
+        "Saint Martin": "mf",
+        "Saint Pierre and Miquelon": "pm",
+        "Saint Vincent and the Grenadines": "vc",
+        Samoa: "ws",
+        "San Marino": "sm",
+        "Sao Tome and Principe": "st",
+        "Saudi Arabia": "sa",
+        Scotland: "gb-sct",
+        Senegal: "sn",
+        Serbia: "rs",
+        Seychelles: "sc",
+        "Sierra Leone": "sl",
+        Singapore: "sg",
+        "Sint Maarten": "sx",
+        Slovakia: "sk",
+        Slovenia: "si",
+        "Solomon Islands": "sb",
+        Somalia: "so",
+        "South Africa": "za",
+        "South Georgia and the South Sandwich Islands": "gs",
+        "South Korea": "kr",
+        "South Sudan": "ss",
+        Spain: "es",
+        "Sri Lanka": "lk",
+        "State of Palestine": "ps",
+        Sudan: "sd",
+        Suriname: "sr",
+        "Svalbard and Jan Mayen": "sj",
+        Sweden: "se",
+        Switzerland: "ch",
+        Syria: "sy",
+        Taiwan: "tw",
+        Tajikistan: "tj",
+        Tanzania: "tz",
+        Thailand: "th",
+        "Timor-Leste": "tl",
+        Togo: "tg",
+        Tokelau: "tk",
+        Tonga: "to",
+        "Trinidad and Tobago": "tt",
+        "Tristan da Cunha": "sh-ta",
+        Tunisia: "tn",
+        Turkey: "tr",
+        Turkmenistan: "tm",
+        "Turks and Caicos Islands": "tc",
+        Tuvalu: "tv",
+        Uganda: "ug",
+        Ukraine: "ua",
+        "United Arab Emirates": "ae",
+        "United Kingdom": "gb",
+        "United Nations": "un",
+        "United States": "us",
+        "United States Minor Outlying Islands": "um",
+        Unknown: "xx",
+        Uruguay: "uy",
+        Uzbekistan: "uz",
+        Vanuatu: "vu",
+        Venezuela: "ve",
+        Vietnam: "vn",
+        "Virgin Islands (British)": "vg",
+        "Virgin Islands (U.S.)": "vi",
+        Wales: "gb-wls",
+        "Wallis and Futuna": "wf",
+        "Western Sahara": "eh",
+        Yemen: "ye",
+        Zambia: "zm",
+        Zimbabwe: "zw",
+      };
 
       const userDataPath = "USER_DATA_PATH_PLACEHOLDER";
       const CACHE_FILE = path.join(userDataPath, "player-cache.json");
@@ -73,6 +357,7 @@
             const { timestamp, data } = JSON.parse(cacheData);
             if (Date.now() - timestamp < CACHE_DURATION) {
               playersData = data;
+              populateCountryDropdown();
               renderPlayers();
               return;
             }
@@ -82,12 +367,12 @@
 
           console.log(
             "Fetching from:",
-            `${GH_PAGES_URL}/assets/data/players.json?v=1`
+            `${GH_PAGES_URL}/assets/data/players.json?v=1&t=${Date.now()}`
           );
 
           // Fetch from GitHub Pages
           const response = await fetch(
-            `${GH_PAGES_URL}/assets/data/players.json?v=1`
+            `${GH_PAGES_URL}/assets/data/players.json?v=1&t=${Date.now()}`
           );
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -105,6 +390,7 @@
             })
           );
 
+          populateCountryDropdown();
           renderPlayers();
         } catch (error) {
           console.error("Error fetching players data:", error);
@@ -115,6 +401,7 @@
             const { data } = JSON.parse(cacheData);
             console.log("Falling back to cached data");
             playersData = data;
+            populateCountryDropdown();
             renderPlayers();
           } catch (cacheError) {
             console.error("No cache available:", cacheError);
@@ -127,11 +414,55 @@
         }
       }
 
+      function populateCountryDropdown() {
+        // Get unique country codes first
+        const uniqueCountryCodes = [
+          ...new Set(
+            playersData.players
+              .filter((player) => player.country)
+              .map((player) => player.country)
+          ),
+        ];
+
+        // Create a reverse mapping of country codes to names
+        const countryCodesMap = Object.entries(countryFlags).reduce(
+          (acc, [name, code]) => {
+            acc[code] = name;
+            return acc;
+          },
+          {}
+        );
+
+        // Map codes to names and sort
+        const countries = uniqueCountryCodes
+          .map((code) => ({
+            code,
+            name: countryCodesMap[code] || code, // Fallback to code if name not found
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name));
+
+        countryFilter.innerHTML =
+          '<option value="">All Countries</option>' +
+          countries
+            .map(
+              (country) =>
+                `<option value="${country.code}">${country.name}</option>`
+            )
+            .join("");
+      }
+
       function renderPlayers(searchTerm = "") {
+        const selectedCountry = countryFilter.value;
+
         filteredPlayers = playersData.players
-          .filter((player) =>
-            player.name.toLowerCase().includes(searchTerm.toLowerCase())
-          )
+          .filter((player) => {
+            const matchesSearch = player.name
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase());
+            const matchesCountry =
+              !selectedCountry || player.country === selectedCountry;
+            return matchesSearch && matchesCountry;
+          })
           .sort((a, b) => a.name.localeCompare(b.name));
 
         const totalPages = Math.ceil(filteredPlayers.length / PLAYERS_PER_PAGE);
@@ -152,7 +483,14 @@
               onload="this.style.opacity = '1'"
             />
             <div class="player-info">
-              <span class="player-name">${player.name}</span>
+              <div class="player-name-container">
+                ${
+                  player.country
+                    ? `<span class="fi fi-${player.country.toLowerCase()}"></span>`
+                    : ""
+                }
+                <span class="player-name">${player.name}</span>
+              </div>
               <span class="player-realname">${player.realName || ""}</span>
             </div>
           </div>
@@ -246,6 +584,11 @@
           currentPage++;
           renderPlayers(searchInput.value);
         }
+      });
+
+      countryFilter.addEventListener("change", () => {
+        currentPage = 1;
+        renderPlayers(searchInput.value);
       });
 
       function openContributionGuide(event) {

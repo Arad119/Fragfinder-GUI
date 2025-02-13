@@ -3296,6 +3296,111 @@
       "steamId": "76561198054042778",
       "image": "neaLaN.png",
       "country": "kz"
+    },
+    {
+      "name": "EMUHLEET",
+      "realName": "Emmalee Garrido",
+      "steamId": "76561197962511667",
+      "image": "EMUHLEET.png",
+      "country": "us"
+    },
+    {
+      "name": "mira",
+      "realName": "Mira Luna",
+      "steamId": "76561198297390513",
+      "image": "mira.png",
+      "country": "us"
+    },
+    {
+      "name": "PiggyKiki",
+      "realName": "Kiki Long",
+      "steamId": "76561198154172820",
+      "image": "PiggyKiki.png",
+      "country": "cn"
+    },
+    {
+      "name": "7licious",
+      "realName": "Tilde Byström",
+      "steamId": "76561198259552907",
+      "image": "7licious.png",
+      "country": "se"
+    },
+    {
+      "name": "Ellie",
+      "realName": "Elena Garland",
+      "steamId": "76561198112964184",
+      "image": "Ellie.png",
+      "country": "us"
+    },
+    {
+      "name": "arT",
+      "realName": "Andrei Piovezan",
+      "steamId": "76561198043769572",
+      "image": "arT.png",
+      "country": "br"
+    },
+    {
+      "name": "ArtFr0st",
+      "realName": "Artem Kharitonov",
+      "steamId": "76561198156778414",
+      "image": "ArtFr0st.png",
+      "country": "ru"
+    },
+    {
+      "name": "piriajr",
+      "realName": "Guilherme Barbosa",
+      "steamId": "76561198396338183",
+      "image": "piriajr.png",
+      "country": "br"
+    },
+    {
+      "name": "kye",
+      "realName": "Kayke Bertolucci",
+      "steamId": "76561199096031141",
+      "image": "kye.png",
+      "country": "br"
+    },
+    {
+      "name": "history",
+      "realName": "Allan Lawrenz",
+      "steamId": "76561198885430317",
+      "image": "history.png",
+      "country": "br"
+    },
+    {
+      "name": "nicks",
+      "realName": "Nicollas Polonio",
+      "steamId": "76561198254423843",
+      "image": "nicks.png",
+      "country": "br"
+    },
+    {
+      "name": "Aunkere",
+      "realName": "Eugene Karyat",
+      "steamId": "76561198315239020",
+      "image": "Aunkere.png",
+      "country": "ru"
+    },
+    {
+      "name": "BOROS",
+      "realName": "Mohammad Malhas",
+      "steamId": "76561198139039223",
+      "image": "BOROS.png",
+      "country": "jo"
+    },
+    {
+      "name": "Bååten",
+      "realName": "Linus Andersson",
+      "steamId": "76561198123464966",
+      "image": "Bååten.png",
+      "country": "se"
+    },
+    {
+      "name": "Cooper",
+      "realName": "Austin Abadir",
+      "steamId": "76561197967516987",
+      "image": "Cooper.png",
+      "country": "us"
     }
   ]
 }

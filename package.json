@@ -1,7 +1,7 @@
 {
   "name": "fragfinder",
   "productName": "Fragfinder",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Analyze and extract data from Counter-Strike demos",
   "main": "src/main.js",
   "scripts": {

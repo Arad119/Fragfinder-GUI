@@ -454,11 +454,19 @@
       function renderPlayers(searchTerm = "") {
         const selectedCountry = countryFilter.value;
 
+        // Function to normalize text by removing diacritics and converting to lowercase
+        const normalizeText = (text) => {
+          return text
+            .normalize("NFD") // Decompose characters into base + diacritics
+            .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+            .toLowerCase(); // Convert to lowercase
+        };
+
         filteredPlayers = playersData.players
           .filter((player) => {
-            const matchesSearch = player.name
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase());
+            const normalizedSearch = normalizeText(searchTerm);
+            const normalizedName = normalizeText(player.name);
+            const matchesSearch = normalizedName.includes(normalizedSearch);
             const matchesCountry =
               !selectedCountry || player.country === selectedCountry;
             return matchesSearch && matchesCountry;

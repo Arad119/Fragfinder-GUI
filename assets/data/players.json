@@ -3401,6 +3401,524 @@
       "steamId": "76561197967516987",
       "image": "Cooper.png",
       "country": "us"
+    },
+    {
+      "name": "Stormy",
+      "realName": "Elizaveta Poshekhnova",
+      "steamId": "76561198124069649",
+      "image": "Stormy.png",
+      "country": "ru"
+    },
+    {
+      "name": "Margo",
+      "realName": "Margarita Ilyina",
+      "steamId": "76561198845934675",
+      "image": "Margo.png",
+      "country": "ru"
+    },
+    {
+      "name": "v1spel",
+      "realName": "Karyna Sytnyk",
+      "steamId": "76561198347210524",
+      "image": "v1spel.png",
+      "country": "ua"
+    },
+    {
+      "name": "irbitka",
+      "realName": "Tamilla Bashirova",
+      "steamId": "76561198985777852",
+      "image": "irbitka.png",
+      "country": "az"
+    },
+    {
+      "name": "emocore",
+      "realName": "Elizaveta Zhinko",
+      "steamId": "76561198798830877",
+      "image": "emocore.png",
+      "country": "ru"
+    },
+    {
+      "name": "gafolo",
+      "realName": "Victor Andrade",
+      "steamId": "76561198135228658",
+      "image": "gafolo.png",
+      "country": "br"
+    },
+    {
+      "name": "koala",
+      "realName": "João Pfeffer",
+      "steamId": "76561198809462276",
+      "image": "koala.png",
+      "country": "br"
+    },
+    {
+      "name": "rdnzao",
+      "realName": "Daniel Monteiro",
+      "steamId": "76561198307734468",
+      "image": "rdnzao.png",
+      "country": "br"
+    },
+    {
+      "name": "doc",
+      "realName": "Danilo Barros",
+      "steamId": "76561198095896540",
+      "image": "doc.png",
+      "country": "br"
+    },
+    {
+      "name": "n1cks",
+      "realName": "Nicolas Paixão",
+      "steamId": "76561199126187769",
+      "image": "n1cks.png",
+      "country": "br"
+    },
+    {
+      "name": "aumaN",
+      "realName": "ZhiHong Liu",
+      "steamId": "76561198006489426",
+      "image": "aumaN.png",
+      "country": "cn"
+    },
+    {
+      "name": "JamYoung",
+      "realName": "Yi Yang",
+      "steamId": "76561198364937038",
+      "image": "JamYoung.png",
+      "country": "cn"
+    },
+    {
+      "name": "Jee",
+      "realName": "Dongkai Ji",
+      "steamId": "76561198360407641",
+      "image": "Jee.png",
+      "country": "cn"
+    },
+    {
+      "name": "Mercury",
+      "realName": "Jingxiang Wang",
+      "steamId": "76561198108796479",
+      "image": "Mercury.png",
+      "country": "cn"
+    },
+    {
+      "name": "Moseyuh",
+      "realName": "Qianhao Chen",
+      "steamId": "76561198355197522",
+      "image": "Moseyuh.png",
+      "country": "cn"
+    },
+    {
+      "name": "Wolffe",
+      "realName": "Kyle Greenfield",
+      "steamId": "76561198122668381",
+      "image": "Wolffe.png",
+      "country": "us"
+    },
+    {
+      "name": "freshie",
+      "realName": "Adam Paterson",
+      "steamId": "76561198336814871",
+      "image": "freshie.png",
+      "country": "ca"
+    },
+    {
+      "name": "Fruitcupx",
+      "realName": "Gavin Norman",
+      "steamId": "76561198339361458",
+      "image": "Fruitcupx.png",
+      "country": "us"
+    },
+    {
+      "name": "SLIGHT",
+      "realName": "Keller Nilan",
+      "steamId": "76561198153580037",
+      "image": "SLIGHT.png",
+      "country": "us"
+    },
+    {
+      "name": "snav",
+      "realName": "Wyatt Phillippi",
+      "steamId": "76561198238642986",
+      "image": "snav.png",
+      "country": "us"
+    },
+    {
+      "name": "Kristou",
+      "realName": "Kristoffer Aamand",
+      "steamId": "76561198107540058",
+      "image": "Kristou.png",
+      "country": "dk"
+    },
+    {
+      "name": "TMB",
+      "realName": "Thomas Bundsbæk",
+      "steamId": "76561198084607254",
+      "image": "TMB.png",
+      "country": "dk"
+    },
+    {
+      "name": "Anlelele",
+      "realName": "Anton Huynh",
+      "steamId": "76561198129799489",
+      "image": "Anlelele.png",
+      "country": "dk"
+    },
+    {
+      "name": "nut nut",
+      "realName": "Martin Holm Vestergaard",
+      "steamId": "76561198155303242",
+      "image": "nut nut.png",
+      "country": "dk"
+    },
+    {
+      "name": "sirah",
+      "realName": "William Kjærsgaard",
+      "steamId": "76561198308941038",
+      "image": "sirah.png",
+      "country": "dk"
+    },
+    {
+      "name": "szejn",
+      "realName": "Hubert Światły",
+      "steamId": "76561198029492496",
+      "image": "szejn.png",
+      "country": "pl"
+    },
+    {
+      "name": "b1elany",
+      "realName": "Maciej Biliński",
+      "steamId": "76561198212208204",
+      "image": "b1elany.png",
+      "country": "pl"
+    },
+    {
+      "name": "aNdu",
+      "realName": "Andreas Maasing",
+      "steamId": "76561198218879055",
+      "image": "aNdu.png",
+      "country": "ee"
+    },
+    {
+      "name": "Tapewaare",
+      "realName": "Sindre Ellefsen",
+      "steamId": "76561198930218135",
+      "image": "Tapewaare.png",
+      "country": "no"
+    },
+    {
+      "name": "destiny",
+      "realName": "Lucas Bullo",
+      "steamId": "76561198049794434",
+      "image": "destiny.png",
+      "country": "br"
+    },
+    {
+      "name": "drg",
+      "realName": "Rodrigo Ausenka",
+      "steamId": "76561198154095163",
+      "image": "drg.png",
+      "country": "br"
+    },
+    {
+      "name": "nython",
+      "realName": "Gabriel Lino",
+      "steamId": "76561198130490651",
+      "image": "nython.png",
+      "country": "br"
+    },
+    {
+      "name": "gbb",
+      "realName": "Gabriel Pereira",
+      "steamId": "76561199016517194",
+      "image": "gbb.png",
+      "country": "br"
+    },
+    {
+      "name": "tomate",
+      "realName": "Moisés Lima",
+      "steamId": "76561198160550112",
+      "image": "tomate.png",
+      "country": "br"
+    },
+    {
+      "name": "Demho",
+      "realName": "Patryk Tomaszewski",
+      "steamId": "76561198107012488",
+      "image": "Demho.png",
+      "country": "pl"
+    },
+    {
+      "name": "Prism",
+      "realName": "Wojciech Zięba",
+      "steamId": "76561198077677671",
+      "image": "Prism.png",
+      "country": "pl"
+    },
+    {
+      "name": "jcobbb",
+      "realName": "Jakub Pietruszewski",
+      "steamId": "76561198178737429",
+      "image": "jcobbb.png",
+      "country": "pl"
+    },
+    {
+      "name": "hfah",
+      "realName": "Oskar Wroński",
+      "steamId": "76561198308155775",
+      "image": "hfah.png",
+      "country": "pl"
+    },
+    {
+      "name": "hypex",
+      "realName": "Milan Polowiec",
+      "steamId": "76561198254686734",
+      "image": "hypex.png",
+      "country": "pl"
+    },
+    {
+      "name": "bondik",
+      "realName": "Vladyslav Nechyporchuk",
+      "steamId": "76561198007184371",
+      "image": "bondik.png",
+      "country": "ua"
+    },
+    {
+      "name": "Smash",
+      "realName": "Oleksandr Turchyn",
+      "steamId": "76561198174293313",
+      "image": "Smash.png",
+      "country": "ua"
+    },
+    {
+      "name": "Marix",
+      "realName": "Max Kugener",
+      "steamId": "76561198176422667",
+      "image": "Marix.png",
+      "country": "lu"
+    },
+    {
+      "name": "j3kie",
+      "realName": "Yevhen Serhachov",
+      "steamId": "76561198327980204",
+      "image": "j3kie.png",
+      "country": "ua"
+    },
+    {
+      "name": "t3ns1on",
+      "realName": "Daniil Kashura",
+      "steamId": "76561198819279246",
+      "image": "t3ns1on.png",
+      "country": "ua"
+    },
+    {
+      "name": "ben1337",
+      "realName": "Ben Smith",
+      "steamId": "76561198091727390",
+      "image": "ben1337.png",
+      "country": "us"
+    },
+    {
+      "name": "FaNg",
+      "realName": "Justin Coakley",
+      "steamId": "76561198272723319",
+      "image": "FaNg.png",
+      "country": "ca"
+    },
+    {
+      "name": "Walco",
+      "realName": "Colby Walsh",
+      "steamId": "76561198089905186",
+      "image": "Walco.png",
+      "country": "ca"
+    },
+    {
+      "name": "viz",
+      "realName": "Wesley Harris",
+      "steamId": "76561198394158362",
+      "image": "viz.png",
+      "country": "us"
+    },
+    {
+      "name": "ogwizard",
+      "realName": "Bogdan Savula",
+      "steamId": "76561198802655267",
+      "image": "ogwizard.png",
+      "country": "ua"
+    },
+    {
+      "name": "SELLTER",
+      "realName": "Ivan Miroshnikov",
+      "steamId": "76561198119088041",
+      "image": "SELLTER.png",
+      "country": "ru"
+    },
+    {
+      "name": "xiELO",
+      "realName": "Vladislav Lysov",
+      "steamId": "76561198141272052",
+      "image": "xiELO.png",
+      "country": "ru"
+    },
+    {
+      "name": "Sdaim",
+      "realName": "Daniil Tupov",
+      "steamId": "76561198829202374",
+      "image": "Sdaim.png",
+      "country": "ua"
+    },
+    {
+      "name": "easy",
+      "realName": "Ivan Mikitenko",
+      "steamId": "76561198318025977",
+      "image": "easy.png",
+      "country": "ru"
+    },
+    {
+      "name": "fineshine52",
+      "realName": "Ivan Lukin",
+      "steamId": "76561198138327415",
+      "image": "fineshine52.png",
+      "country": "ru"
+    },
+    {
+      "name": "aVN",
+      "realName": "Filip Belojica",
+      "steamId": "76561198191567453",
+      "image": "aVN.png",
+      "country": "rs"
+    },
+    {
+      "name": "nEMANHA",
+      "realName": "Nemanja Đukić",
+      "steamId": "76561197982341849",
+      "image": "nEMANHA.png",
+      "country": "rs"
+    },
+    {
+      "name": "Cjoffo",
+      "realName": "Andrej Šarac",
+      "steamId": "76561198283118254",
+      "image": "Cjoffo.png",
+      "country": "me"
+    },
+    {
+      "name": "brutmonster",
+      "realName": "Adin Husić",
+      "steamId": "76561198258996278",
+      "image": "brutmonster.png",
+      "country": "ba"
+    },
+    {
+      "name": "simke",
+      "realName": "Saša Simić",
+      "steamId": "76561198335534043",
+      "image": "simke.png",
+      "country": "ba"
+    },
+    {
+      "name": "sm3t",
+      "realName": "Matvey Gogin",
+      "steamId": "76561198341996771",
+      "image": "sm3t.png",
+      "country": "ru"
+    },
+    {
+      "name": "kAlash",
+      "realName": "Altair Askarov",
+      "steamId": "76561198357173694",
+      "image": "kAlash.png",
+      "country": "kz"
+    },
+    {
+      "name": "sFade8",
+      "realName": "Vitaliy Marushka",
+      "steamId": "76561198964621199",
+      "image": "sFade8.png",
+      "country": "ua"
+    },
+    {
+      "name": "AW",
+      "realName": "Andrey Anisimov",
+      "steamId": "76561198269361539",
+      "image": "AW.png",
+      "country": "ru"
+    },
+    {
+      "name": "molodoy",
+      "realName": "Danil Golubenko",
+      "steamId": "76561198200982290",
+      "image": "molodoy.png",
+      "country": "kz"
+    },
+    {
+      "name": "junior",
+      "realName": "Paytyn Johnson",
+      "steamId": "76561198064058958",
+      "image": "junior.png",
+      "country": "us"
+    },
+    {
+      "name": "Cryptic",
+      "realName": "Matthew Whitmore",
+      "steamId": "76561198029235071",
+      "image": "Cryptic.png",
+      "country": "us"
+    },
+    {
+      "name": "Peeping",
+      "realName": "Jaxon Cornwell",
+      "steamId": "76561198452804081",
+      "image": "Peeping.png",
+      "country": "us"
+    },
+    {
+      "name": "WolfY",
+      "realName": "Adam Andersson",
+      "steamId": "76561198007789991",
+      "image": "WolfY.png",
+      "country": "us"
+    },
+    {
+      "name": "motm",
+      "realName": "Ian Hardy",
+      "steamId": "76561198020474058",
+      "image": "motm.png",
+      "country": "us"
+    },
+    {
+      "name": "Minus",
+      "realName": "Marshall Sedowicz",
+      "steamId": "76561198248041656",
+      "image": "Minus.png",
+      "country": "us"
+    },
+    {
+      "name": "chop",
+      "realName": "Connor Sullivan",
+      "steamId": "76561198203239207",
+      "image": "chop.png",
+      "country": "us"
+    },
+    {
+      "name": "Grizz",
+      "realName": "Adam Golden",
+      "steamId": "76561198210447689",
+      "image": "Grizz.png",
+      "country": "us"
+    },
+    {
+      "name": "D0cC",
+      "realName": "Shuaib Ahmad",
+      "steamId": "76561198281640972",
+      "image": "D0cC.png",
+      "country": "nl"
+    },
+    {
+      "name": "Lobanjica",
+      "realName": "Nikola Mijomanović",
+      "steamId": "76561198133274020",
+      "image": "Lobanjica.png",
+      "country": "me"
     }
   ]
 }

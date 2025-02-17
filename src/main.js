@@ -14,7 +14,11 @@ const path = require("path");
 const ProgressBar = require("electron-progressbar");
 const { autoUpdater } = require("electron-updater");
 const isDev = require("electron-is-dev");
-const { analyzeDemo, ExportFormat } = require("@akiver/cs-demo-analyzer");
+const {
+  analyzeDemo,
+  DemoSource,
+  ExportFormat,
+} = require("@akiver/cs-demo-analyzer");
 const analyzeBinaryPath = isDev
   ? undefined // Use default path in dev mode
   : path.join(process.resourcesPath, "csda.exe");
@@ -122,6 +126,7 @@ ipcMain.on("setSteamId", (event, { steamid, previewMode }) => {
       demoPath: demoPath,
       outputFolderPath: tempOutputPath,
       format: ExportFormat.JSON,
+      source: DemoSource.Valve,
       analyzePositions: false,
       minify: false,
       onStderr: console.error,

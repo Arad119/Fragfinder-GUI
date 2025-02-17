@@ -1,8 +1,8 @@
 {
   "name": "fragfinder",
   "productName": "Fragfinder",
-  "version": "2.1.1",
-  "description": "Electron App",
+  "version": "2.1.2",
+  "description": "Analyze and extract data from Counter-Strike demos",
   "main": "src/main.js",
   "scripts": {
     "start": "electron-forge start",

@@ -136,7 +136,7 @@ Explanation taken from [henb13/frag-finder](https://github.com/HenB13/frag-finde
 
 ## Contributing
 
-The player database used for the pro player search feature is maintained in a separate branch (`gh-pages`) that serves as a CDN for the application. To contribute new players:
+The player database used for the pro player search feature is maintained in a separate branch (`assets`) that serves as a CDN for the application. To contribute new players:
 
 #### Player Eligibility
 
@@ -151,7 +151,7 @@ These requirements ensure data reliability and verification of player informatio
 #### How to Contribute
 
 1. Fork the repository
-2. Switch to the `gh-pages` branch
+2. Switch to the `assets` branch
 3. Create a new branch: `git checkout -b add-player-[playername]`
 4. Add required files:
    - Player image: `assets/playerImages/[playername].png`
@@ -181,7 +181,7 @@ These requirements ensure data reliability and verification of player informatio
 - Player images are sourced from [HLTV.org](https://www.hltv.org)
 - Steam IDs are verified through [Liquipedia](https://liquipedia.net/counterstrike/)
 
-For more detailed contribution guidelines, please visit the [gh-pages branch](https://github.com/Arad119/Fragfinder-GUI/tree/gh-pages).
+For more detailed contribution guidelines, please visit the [assets branch](https://github.com/Arad119/Fragfinder-GUI/tree/assets).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

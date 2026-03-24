@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Player Search</title>
@@ -345,8 +345,8 @@
       const CACHE_FILE = path.join(userDataPath, "player-cache.json");
 
       const CACHE_DURATION = 12 * 60 * 60 * 1000; // 12 hours
-      const GH_PAGES_URL =
-        "https://cdn.jsdelivr.net/gh/arad119/Fragfinder-GUI@gh-pages";
+      const ASSETS_PAGES_URL =
+        "https://cdn.jsdelivr.net/gh/arad119/Fragfinder-GUI@assets";
 
       // Fetch players data from CDN
       async function fetchPlayersData() {
@@ -367,12 +367,12 @@
 
           console.log(
             "Fetching from:",
-            `${GH_PAGES_URL}/assets/data/players.json?v=1&t=${Date.now()}`
+            `${ASSETS_PAGES_URL}/assets/data/players.json?v=1&t=${Date.now()}`,
           );
 
           // Fetch from GitHub Pages
           const response = await fetch(
-            `${GH_PAGES_URL}/assets/data/players.json?v=1&t=${Date.now()}`
+            `${ASSETS_PAGES_URL}/assets/data/players.json?v=1&t=${Date.now()}`,
           );
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -387,7 +387,7 @@
             JSON.stringify({
               timestamp: Date.now(),
               data: playersData,
-            })
+            }),
           );
 
           populateCountryDropdown();
@@ -420,7 +420,7 @@
           ...new Set(
             playersData.players
               .filter((player) => player.country)
-              .map((player) => player.country)
+              .map((player) => player.country),
           ),
         ];
 
@@ -430,7 +430,7 @@
             acc[code] = name;
             return acc;
           },
-          {}
+          {},
         );
 
         // Map codes to names and sort
@@ -446,7 +446,7 @@
           countries
             .map(
               (country) =>
-                `<option value="${country.code}">${country.name}</option>`
+                `<option value="${country.code}">${country.name}</option>`,
             )
             .join("");
       }
@@ -486,7 +486,7 @@
           <div class="player-item" onclick="selectPlayer('${player.steamId}')">
             <img 
               src="file://${basePath}/player_silhouette.png"
-              data-cdn="${GH_PAGES_URL}/assets/playerImages/${player.image}?v=1"
+              data-cdn="${ASSETS_PAGES_URL}/assets/playerImages/${player.image}?v=1"
               class="player-image"
               onload="this.style.opacity = '1'"
             />
@@ -502,7 +502,7 @@
               <span class="player-realname">${player.realName || ""}</span>
             </div>
           </div>
-        `
+        `,
           )
           .join("");
 
@@ -520,7 +520,7 @@
             root: document.querySelector(".search-container"),
             threshold: 0.1,
             rootMargin: "20px",
-          }
+          },
         );
 
         // Observe all player items
@@ -602,7 +602,7 @@
       function openContributionGuide(event) {
         event.preventDefault();
         shell.openExternal(
-          "https://github.com/Arad119/Fragfinder-GUI/tree/gh-pages"
+          "https://github.com/Arad119/Fragfinder-GUI/tree/assets",
         );
       }
 
